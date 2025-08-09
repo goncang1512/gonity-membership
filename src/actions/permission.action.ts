@@ -48,6 +48,10 @@ export const getPermission = async () => {
       where: {
         userId: String(session?.user.id),
       },
+      select: {
+        id: true,
+        name: true,
+      },
     });
 
     return {

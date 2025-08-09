@@ -38,7 +38,8 @@ export default function AddAccess() {
         className={cn(
           buttonVariants({
             variant: "default",
-            className: "cursor-pointer",
+            className:
+              "flex items-center gap-2 bg-blue-500 hover:bg-blue-600 cursor-pointer",
           })
         )}
       >

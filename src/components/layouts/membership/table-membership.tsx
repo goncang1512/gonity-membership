@@ -10,27 +10,28 @@ import {
 import { Button } from "../../ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "../../ui/badge";
+import { getMembership } from "@/src/actions/membership.action";
 
 const getStatusBadge = (status: string) => {
   switch (status) {
-    case "Active":
+    case "active":
       return (
-        <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+        <Badge className="bg-green-100 text-green-700 hover:bg-green-100 capitalize">
           {status}
         </Badge>
       );
-    case "Pending":
+    case "pending":
       return (
         <Badge
           variant="secondary"
-          className="bg-gray-100 text-gray-600 hover:bg-gray-100"
+          className="bg-gray-100 text-gray-600 hover:bg-gray-100 capitalize"
         >
           {status}
         </Badge>
       );
-    case "Inactive":
+    case "inactive":
       return (
-        <Badge className="bg-red-100 text-red-700 hover:bg-red-100">
+        <Badge className="bg-red-100 text-red-700 hover:bg-red-100 capitalize">
           {status}
         </Badge>
       );
@@ -39,7 +40,9 @@ const getStatusBadge = (status: string) => {
   }
 };
 
-export default function TableMembership({ data }: { data: any[] }) {
+export default async function TableMembership() {
+  const results = await getMembership();
+
   return (
     <Table>
       <TableHeader>
@@ -52,11 +55,11 @@ export default function TableMembership({ data }: { data: any[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((tier, index) => (
-          <TableRow key={index}>
+        {results.data.map((tier) => (
+          <TableRow key={tier.id}>
             <TableCell>{tier.name}</TableCell>
-            <TableCell>{tier.price}</TableCell>
-            <TableCell>{tier.duration}</TableCell>
+            <TableCell>Rp {tier.price.toLocaleString("id-ID")}</TableCell>
+            <TableCell>{tier.duration} days</TableCell>
             <TableCell>{getStatusBadge(tier.status)}</TableCell>
             <TableCell className="text-right space-x-2">
               <Button variant="outline" size="icon">

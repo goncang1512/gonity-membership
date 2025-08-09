@@ -67,3 +67,38 @@ export const createMembership = async (formData: FormData) => {
     };
   }
 };
+
+export const getMembership = async () => {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    const result = await prisma.membership.findMany({
+      where: {
+        userId: String(session?.user.id),
+      },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        duration: true,
+        status: true,
+      },
+    });
+
+    return {
+      status: true,
+      statusCode: 201,
+      message: "Success",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      statusCode: 500,
+      message: "Internal Server Error",
+      data: [],
+    };
+  }
+};
