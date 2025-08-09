@@ -9,13 +9,14 @@ export default function MembershipInput() {
       {/* Name */}
       <div className="space-y-2">
         <Label htmlFor="name">Membership Name</Label>
-        <Input id="name" placeholder="e.g., Premium Monthly Pass" />
+        <Input name="name" id="name" placeholder="e.g., Premium Monthly Pass" />
       </div>
 
       {/* Description */}
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
+          name="description"
           id="description"
           placeholder="Provide a detailed description of this membership plan."
         />
@@ -27,9 +28,10 @@ export default function MembershipInput() {
           <Label htmlFor="price">Price</Label>
           <div className="flex">
             <span className="inline-flex items-center px-3 border border-r-0 rounded-l-md bg-gray-100">
-              $
+              Rp
             </span>
             <Input
+              name="price"
               id="price"
               type="number"
               placeholder="0.00"
@@ -41,6 +43,7 @@ export default function MembershipInput() {
           <Label htmlFor="duration">Duration</Label>
           <div className="flex">
             <Input
+              name="duration"
               id="duration"
               type="number"
               placeholder="e.g., 30"

@@ -22,7 +22,7 @@ export default async function FeatureMember() {
         {results.data.map((feature) => {
           return (
             <div key={feature.id} className="flex items-center space-x-2">
-              <Checkbox id={feature.id} />
+              <Checkbox name={`checkbox-${feature.id}`} id={feature.id} />
               <Label htmlFor={feature.name} className="text-sm font-normal">
                 {feature.name}
               </Label>
