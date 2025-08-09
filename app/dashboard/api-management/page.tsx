@@ -1,11 +1,12 @@
 import { GenerateCode } from "@/src/components/layouts/api-management/generate-api-key";
+import { Skeleton } from "@/src/components/ui/skeleton";
 import { Suspense } from "react";
 
 export default function ApiKeyManagement() {
   return (
     <div className="space-y-8 p-6 w-full mx-auto">
       {/* API Key Management Section */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton className="w-full h-55" />}>
         <GenerateCode />
       </Suspense>
 

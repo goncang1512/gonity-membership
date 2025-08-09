@@ -1,7 +1,7 @@
 "use client";
 
 import { generateApiKey } from "@/src/actions/api-key.action";
-import { Loader2 } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import React, { startTransition, useState } from "react";
 
 export default function FormGenerate({ apiKey }: { apiKey?: string }) {
@@ -24,7 +24,10 @@ export default function FormGenerate({ apiKey }: { apiKey?: string }) {
         value={apiKey}
         className="w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-mono text-gray-600"
       />
-      <button className="rounded-md border px-3 py-2 text-sm hover:bg-gray-100">
+      <button
+        type="button"
+        className="rounded-md border px-3 py-2 text-sm hover:bg-gray-100"
+      >
         Copy
       </button>
       <button
@@ -32,7 +35,8 @@ export default function FormGenerate({ apiKey }: { apiKey?: string }) {
         type="submit"
         className="rounded-md flex items-center gap-2 cursor-pointer bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700"
       >
-        {loading && <Loader2 className="animate-spin" />}Regenerate
+        <RefreshCw size={20} className={`${loading && "animate-spin"}`} />{" "}
+        Regenerate
       </button>
     </form>
   );

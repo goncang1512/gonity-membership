@@ -25,7 +25,8 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
-  apikeys Apikey[]
+  apikeys    Apikey[]
+  permission Permission[]
 
   @@unique([email])
   @@map("user")
@@ -101,4 +102,18 @@ model Apikey {
   metadata            String?
 
   @@map("apikey")
+}
+
+model Permission {
+  id          String  @id
+  name        String
+  description String?
+  userId      String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("permission")
 }

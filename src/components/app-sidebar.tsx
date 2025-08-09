@@ -11,6 +11,7 @@ import {
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
+  IconKey,
   IconListDetails,
   IconReport,
   IconSearch,
@@ -45,9 +46,14 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
+      title: "Membership",
+      url: "/dashboard/membership",
       icon: IconListDetails,
+    },
+    {
+      title: "Api Key",
+      url: "/dashboard/api-management",
+      icon: IconKey,
     },
     {
       title: "Analytics",
