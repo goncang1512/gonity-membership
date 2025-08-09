@@ -7,10 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
-import { Button } from "../../ui/button";
+import { Button, buttonVariants } from "../../ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "../../ui/badge";
 import { getMembership } from "@/src/actions/membership.action";
+import DeleteMembership from "./delete-membership";
+import Link from "next/link";
+import { cn } from "@/src/lib/utils";
 
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -62,16 +65,15 @@ export default async function TableMembership() {
             <TableCell>{tier.duration} days</TableCell>
             <TableCell>{getStatusBadge(tier.status)}</TableCell>
             <TableCell className="text-right space-x-2">
-              <Button variant="outline" size="icon">
-                <Pencil className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="text-red-500 hover:text-red-600"
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-2 w-full justify-end">
+                <Link
+                  href={`/dashboard/membership/${tier.id}`}
+                  className={cn(buttonVariants({ variant: "outline" }))}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Link>
+                <DeleteMembership membership_id={tier.id} />
+              </div>
             </TableCell>
           </TableRow>
         ))}
