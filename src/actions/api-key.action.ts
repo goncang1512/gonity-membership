@@ -22,7 +22,7 @@ export const generateApiKey = async () => {
         name: "Membership API KEY",
         expiresIn: 60 * 60 * 24 * 7,
         userId: session?.user.id, // server-only
-        prefix: "project-api-key",
+        prefix: "proj_",
         remaining: 100, // server-only
         refillAmount: 100, // server-only
         refillInterval: 1000, // server-only

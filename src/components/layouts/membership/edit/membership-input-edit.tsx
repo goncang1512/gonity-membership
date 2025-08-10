@@ -14,9 +14,6 @@ export type MembershipType = {
   badge: string;
   status: $Enums.StatusMembership;
   feature: string[];
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
 };
 
 export default function MembershipInputEdit({

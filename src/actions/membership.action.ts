@@ -136,6 +136,16 @@ export const getDetailMembership = async (tier_id: string) => {
       where: {
         id: tier_id,
       },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        duration: true,
+        feature: true,
+        badge: true,
+        status: true,
+      },
     });
     return {
       status: true,

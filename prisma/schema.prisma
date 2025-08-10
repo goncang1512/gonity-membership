@@ -83,7 +83,7 @@ model Apikey {
   name                String?
   start               String?
   prefix              String?
-  key                 String
+  key                 String  @unique
   userId              String
   user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   refillInterval      Int?
