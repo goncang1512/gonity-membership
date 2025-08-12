@@ -49,11 +49,11 @@ export default async function EditMembership({
         </CardHeader>
         <CardContent>
           <FormEdit tier_id={querParams.member_id}>
-            <MembershipInputEdit data={data.data} />
+            <MembershipInputEdit data={data.data ?? null} />
 
             {/* Features */}
             <Suspense fallback={<Skeleton className="w-full h-20" />}>
-              <FeatureMemberEdit feature_id={data.data?.feature ?? []} />
+              <FeatureMemberEdit feature_id={data.data?.permissions ?? []} />
             </Suspense>
 
             {/* Badge/Icon Upload */}

@@ -113,6 +113,7 @@ model Permission {
   userId      String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  membership Membership[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -134,10 +135,10 @@ model Membership {
   duration    Int
   badge       String
   status      StatusMembership
-  feature     String[]
   userId      String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permissions Permission[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

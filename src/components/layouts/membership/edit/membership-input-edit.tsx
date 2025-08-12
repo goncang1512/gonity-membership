@@ -13,7 +13,10 @@ export type MembershipType = {
   duration: number;
   badge: string;
   status: $Enums.StatusMembership;
-  feature: string[];
+  permissions: {
+    id: string;
+    name: string;
+  }[];
 };
 
 export default function MembershipInputEdit({

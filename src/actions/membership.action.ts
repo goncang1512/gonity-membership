@@ -48,8 +48,10 @@ export const createMembership = async (formData: FormData) => {
         price: data.price,
         duration: data.duration,
         userId: String(session?.user.id),
-        feature: data.feature,
         status: data.status as $Enums.StatusMembership,
+        permissions: {
+          connect: data.feature.map((id) => ({ id })),
+        },
         badge: "",
       },
     });
@@ -85,7 +87,11 @@ export const getMembership = async () => {
         name: true,
         price: true,
         duration: true,
+        permissions: true,
         status: true,
+      },
+      orderBy: {
+        price: "desc",
       },
     });
 
@@ -141,8 +147,13 @@ export const getDetailMembership = async (tier_id: string) => {
         name: true,
         description: true,
         price: true,
+        permissions: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         duration: true,
-        feature: true,
         badge: true,
         status: true,
       },
@@ -191,8 +202,10 @@ export const updateMembership = async (formData: FormData, tier_id: string) => {
         description: data.description,
         price: data.price,
         duration: data.duration,
-        feature: data.feature,
         status: data.status as $Enums.StatusMembership,
+        permissions: {
+          connect: data.feature.map((id) => ({ id })),
+        },
         badge: "",
       },
     });

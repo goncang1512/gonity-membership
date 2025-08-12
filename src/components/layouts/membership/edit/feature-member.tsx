@@ -10,7 +10,7 @@ import { DeleteFeatureButton } from "../create/delete-permission";
 export default async function FeatureMemberEdit({
   feature_id,
 }: {
-  feature_id: string[];
+  feature_id: { id: string; name: string }[];
 }) {
   const results = await getPermission();
 
@@ -24,7 +24,9 @@ export default async function FeatureMemberEdit({
       <Label>Features Included</Label>
       <div className="grid grid-cols-2 gap-2">
         {results.data.map((feature) => {
-          const isFeat = feature_id.some((item) => item === feature.id);
+          const isFeat = feature_id.some(
+            (item) => String(item.id) === String(feature.id)
+          );
           return (
             <div key={feature.id} className="flex items-center space-x-2">
               <Checkbox

@@ -38,6 +38,20 @@ export const verifyApi = async (c: Context, next: Next) => {
     );
   }
 
+  const allowedOrigin = await prisma.authorizeUri.findMany({
+    where: {
+      userId: data.userId,
+    },
+    select: {
+      url: true,
+    },
+  });
+  const origin = c.req.header("Origin");
+
+  if (!allowedOrigin.some((item) => item.url !== origin)) {
+    return c.json({ error: "URIs not allowed." }, { status: 403 });
+  }
+
   const now = new Date();
   if (data.expiresAt && data.expiresAt < now) {
     return c.json({ error: "API key expired" }, { status: 403 });

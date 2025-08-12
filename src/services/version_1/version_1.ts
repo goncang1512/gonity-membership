@@ -5,9 +5,11 @@ import { allowOrigins } from "@/src/middleware/allow-origins";
 
 const app = new Hono();
 
-app.use("/*", verifyApi);
-// CORS middleware async
+// app.use("/*", preflightCors);
 app.use("/*", allowOrigins);
+app.use("/*", verifyApi);
+
+// CORS middleware async
 
 app.route("/membership", memberApp);
 
