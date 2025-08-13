@@ -80,7 +80,7 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/setting",
       icon: IconSettings,
     },
     {
