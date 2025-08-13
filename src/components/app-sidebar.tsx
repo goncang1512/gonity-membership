@@ -13,6 +13,7 @@ import {
   IconInnerShadowTop,
   IconKey,
   IconListDetails,
+  IconRepeat,
   IconReport,
   IconSearch,
   IconSettings,
@@ -51,6 +52,11 @@ const data = {
       icon: IconListDetails,
     },
     {
+      title: "Transactions",
+      url: "/dashboard/transactions",
+      icon: IconRepeat,
+    },
+    {
       title: "Api Key",
       url: "/dashboard/api-management",
       icon: IconKey,
@@ -69,54 +75,6 @@ const data = {
       title: "Team",
       url: "#",
       icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
     },
   ],
   navSecondary: [
