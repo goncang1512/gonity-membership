@@ -2,15 +2,16 @@ import { Hono } from "hono";
 import memberApp from "./membership";
 import { verifyApi } from "@/src/middleware/verify-key";
 import { allowOrigins } from "@/src/middleware/allow-origins";
+import transactionApp from "./transaction";
 
 const app = new Hono();
 
-// app.use("/*", preflightCors);
+// CORS middleware async
 app.use("/*", allowOrigins);
+
 app.use("/*", verifyApi);
 
-// CORS middleware async
-
 app.route("/membership", memberApp);
+app.route("/transactions", transactionApp);
 
 export default app;

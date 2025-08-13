@@ -139,6 +139,8 @@ model Membership {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   permissions Permission[]
+  transaction Transaction[]
+  subscribe Subscribe[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -157,4 +159,55 @@ model AuthorizeUri {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("authorize_uri")
+}
+
+enum TransactionEnum {
+  succeeded
+  failed
+  pending
+  refunded
+  disputed
+
+}
+
+model Transaction {
+  id String @id
+  memberId  String
+  customerEmail String
+  customerName String
+  tierId String
+  amount Int
+  status TransactionEnum
+  method String
+  paidAt DateTime?
+
+  tier  Membership @relation(fields: [tierId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+
+  @@map("transaction")
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  canceled
+  pending
+}
+
+model Subscribe {
+  id              String @id
+  name            String
+  email           String
+  memberId        String
+  membershipId    String
+  membership      Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  expiredAt       DateTime
+  status          SubscriptionStatus
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+
+  @@map("subscribe")
 }
