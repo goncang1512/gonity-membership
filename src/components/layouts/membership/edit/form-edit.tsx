@@ -28,7 +28,7 @@ export default function FormEdit({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form method="POST" onSubmit={handleSubmit} className="space-y-6">
       {children}
     </form>
   );

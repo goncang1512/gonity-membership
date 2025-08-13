@@ -14,8 +14,10 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | undefined>(undefined);
   const handleLogin = async (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage(undefined);
 
     const formData = new FormData(e.currentTarget);
 
@@ -29,8 +31,9 @@ export function LoginForm({
         onRequest: () => {
           setLoading(true);
         },
-        onError: () => {
-          setLoading(true);
+        onError: (ctx) => {
+          setMessage(String(ctx.error.message));
+          setLoading(false);
         },
       }
     );
@@ -57,6 +60,7 @@ export function LoginForm({
                 Sign up
               </Link>
             </div>
+            {message && <p className="text-red-500">{message}</p>}
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-3">
@@ -79,7 +83,11 @@ export function LoginForm({
                 required
               />
             </div>
-            <Button disabled={loading} type="submit" className="w-full">
+            <Button
+              disabled={loading}
+              type="submit"
+              className="w-full cursor-pointer"
+            >
               {loading && <Loader2 className="animate-spin" />} Login
             </Button>
           </div>

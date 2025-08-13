@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { Skeleton } from "@/src/components/ui/skeleton";
+import prisma from "@/src/lib/prisma-client";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
 import React, { Suspense } from "react";

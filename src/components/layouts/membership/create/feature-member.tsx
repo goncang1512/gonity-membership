@@ -10,11 +10,6 @@ import { DeleteFeatureButton } from "./delete-permission";
 export default async function FeatureMember() {
   const results = await getPermission();
 
-  const deleteFeture = async (formData: FormData) => {
-    "use server";
-    await deletePermission(String(formData.get("permission_id")));
-  };
-
   return (
     <div className="space-y-2">
       <Label>Features Included</Label>
@@ -27,10 +22,7 @@ export default async function FeatureMember() {
                 {feature.name}
               </Label>
 
-              <form method="POST" action={deleteFeture}>
-                <input type="hidden" name="permission_id" value={feature.id} />
-                <DeleteFeatureButton />
-              </form>
+              <DeleteFeatureButton permission_id={feature.id} />
             </div>
           );
         })}

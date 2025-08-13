@@ -204,7 +204,7 @@ export const updateMembership = async (formData: FormData, tier_id: string) => {
         duration: data.duration,
         status: data.status as $Enums.StatusMembership,
         permissions: {
-          connect: data.feature.map((id) => ({ id })),
+          set: data.feature.map((id) => ({ id })),
         },
         badge: "",
       },

@@ -67,6 +67,7 @@ export default async function TableMembership() {
             <TableCell className="text-right space-x-2">
               <div className="flex items-center gap-2 w-full justify-end">
                 <Link
+                  prefetch={true}
                   href={`/dashboard/membership/${tier.id}`}
                   className={cn(buttonVariants({ variant: "outline" }))}
                 >
