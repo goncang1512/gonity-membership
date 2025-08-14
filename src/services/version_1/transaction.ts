@@ -24,6 +24,7 @@ const transactionApp = new Hono<{ Variables: Variables }>().post(
       data: {
         id: `GPN${generateId(9).toUpperCase()}`,
         memberId: body.member_id,
+        userId: c.var.admin_id,
         customerEmail: body.email,
         customerName: body.name,
         amount: body.amount,

@@ -167,19 +167,19 @@ enum TransactionEnum {
   pending
   refunded
   disputed
-
 }
 
 model Transaction {
-  id String @id
-  memberId  String
-  customerEmail String
-  customerName String
-  tierId String
-  amount Int
-  status TransactionEnum
-  method String
-  paidAt DateTime?
+  id              String @id
+  userId          String
+  memberId        String
+  customerEmail   String
+  customerName    String
+  tierId          String
+  amount          Int
+  status          TransactionEnum
+  method          String
+  paidAt          DateTime?
 
   tier  Membership @relation(fields: [tierId], references: [id], onDelete: Cascade)
 
@@ -198,6 +198,7 @@ enum SubscriptionStatus {
 
 model Subscribe {
   id              String @id
+  userId          String
   name            String
   email           String
   memberId        String

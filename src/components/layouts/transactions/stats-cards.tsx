@@ -1,27 +1,44 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { $Enums } from "@prisma/client";
 
-export default function StatsCard() {
+export type TransactionType = {
+  id: string;
+  customerName: string;
+  amount: number;
+  status: $Enums.TransactionEnum;
+  method: string;
+  paidAt: Date | null;
+  tier: {
+    name: string;
+  };
+};
+
+interface StatsCardProps {
+  transactions: TransactionType[];
+}
+
+export default function StatsCard({ transactions }: StatsCardProps) {
   const statsData = [
     {
       id: 1,
       description: "Total Transactions",
-      count: 7,
+      count: transactions.length,
     },
     {
       id: 2,
       description: "Succeeded Payments",
-      count: 3,
+      count: transactions.filter((item) => item.status === "succeeded").length,
     },
     {
       id: 3,
       description: "Failed Payments",
-      count: 1,
+      count: transactions.filter((item) => item.status === "failed").length,
     },
     {
       id: 4,
       description: "Refunded Payments",
-      count: 1,
+      count: transactions.filter((item) => item.status === "refunded").length,
     },
   ];
 
