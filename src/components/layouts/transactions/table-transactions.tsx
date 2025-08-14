@@ -12,6 +12,8 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { TransactionType } from "./stats-cards";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+import SendNotification from "./send-notification";
 
 export default function TableTransactions({
   transactions,
@@ -60,9 +62,20 @@ export default function TableTransactions({
               <TableCell>{tx.method}</TableCell>
               <TableCell>{String(tx?.paidAt ?? "-")}</TableCell>
               <TableCell>
-                <Button size="icon" variant="ghost">
-                  <MoreHorizontal className="w-4 h-4" />
-                </Button>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="cursor-pointer"
+                    >
+                      <MoreHorizontal className="w-4 h-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-3xs">
+                    <SendNotification transaction_id={tx.id} />
+                  </PopoverContent>
+                </Popover>
               </TableCell>
             </TableRow>
           ))}

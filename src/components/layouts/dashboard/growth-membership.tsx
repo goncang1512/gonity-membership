@@ -13,16 +13,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function GrowthMembership() {
-  const data = [
-    { month: "Jan", newMembers: 180, cancellations: 25 },
-    { month: "Feb", newMembers: 225, cancellations: 40 },
-    { month: "Mar", newMembers: 200, cancellations: 20 },
-    { month: "Apr", newMembers: 240, cancellations: 50 },
-    { month: "May", newMembers: 280, cancellations: 35 },
-    { month: "Jun", newMembers: 300, cancellations: 40 },
-  ];
+export type GrowthType = {
+  month: string;
+  newMembers: number;
+  cancellations: number;
+};
 
+export default function GrowthMembership({ data }: { data: GrowthType[] }) {
   return (
     <Card className="rounded-xl border border-neutral-200 shadow-sm pl-0">
       <CardHeader>
@@ -34,7 +31,7 @@ export default function GrowthMembership() {
       <CardContent>
         <div className="h-[350px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <LineChart data={data ?? []}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis dataKey="month" stroke="#6b7280" />
               <YAxis stroke="#6b7280" />
