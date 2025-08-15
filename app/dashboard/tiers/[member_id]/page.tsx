@@ -1,10 +1,13 @@
-import AddAccess from "@/src/components/layouts/membership/create/add-access";
-import FeatureMember from "@/src/components/layouts/membership/create/feature-member";
+import { getDetailMembership } from "@/src/actions/membership.action";
+import AddAccess from "@/src/components/layouts/tiers/create/add-access";
 import FormCreate, {
   CreateMembershipButton,
-} from "@/src/components/layouts/membership/create/form-create";
-import MembershipBadgeUpload from "@/src/components/layouts/membership/create/membership-badge";
-import MembershipInput from "@/src/components/layouts/membership/create/membership-input";
+} from "@/src/components/layouts/tiers/create/form-create";
+import MembershipBadgeUpload from "@/src/components/layouts/tiers/create/membership-badge";
+import FeatureMemberEdit from "@/src/components/layouts/tiers/edit/feature-member";
+import FormEdit from "@/src/components/layouts/tiers/edit/form-edit";
+import MembershipInputEdit from "@/src/components/layouts/tiers/edit/membership-input-edit";
+import StatusMember from "@/src/components/layouts/tiers/edit/status-member";
 import { buttonVariants } from "@/src/components/ui/button";
 import {
   Card,
@@ -13,21 +16,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
-import { Label } from "@/src/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/src/components/ui/select";
 import { Skeleton } from "@/src/components/ui/skeleton";
+import prisma from "@/src/lib/prisma-client";
 import { cn } from "@/src/lib/utils";
-import { SelectGroup } from "@radix-ui/react-select";
 import Link from "next/link";
 import React, { Suspense } from "react";
 
-export default function CreateMembership() {
+export default async function EditMembership({
+  params,
+}: {
+  params: Promise<{ member_id: string }>;
+}) {
+  const querParams = await params;
+  const data = await getDetailMembership(querParams.member_id);
+
   return (
     <div className="p-6 space-y-4">
       <div className="flex justify-between items-center">
@@ -47,34 +49,19 @@ export default function CreateMembership() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <FormCreate>
-            <MembershipInput />
+          <FormEdit tier_id={querParams.member_id}>
+            <MembershipInputEdit data={data.data ?? null} />
 
             {/* Features */}
             <Suspense fallback={<Skeleton className="w-full h-20" />}>
-              <FeatureMember />
+              <FeatureMemberEdit feature_id={data.data?.permissions ?? []} />
             </Suspense>
 
             {/* Badge/Icon Upload */}
             <MembershipBadgeUpload />
 
-            {/* Status */}
-            <div className="flex items-center justify-between pt-4">
-              <Label htmlFor="status">Status</Label>
-              <Select name="status">
-                <SelectTrigger>
-                  <SelectValue placeholder="Choose status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
+            {/* STATUS */}
+            <StatusMember status={data.data?.status} />
             {/* Buttons */}
             <div className="flex justify-end space-x-2 pt-4 border-t">
               <Link
@@ -85,7 +72,7 @@ export default function CreateMembership() {
               </Link>
               <CreateMembershipButton />
             </div>
-          </FormCreate>
+          </FormEdit>
         </CardContent>
       </Card>
     </div>

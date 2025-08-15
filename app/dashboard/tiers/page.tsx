@@ -1,4 +1,4 @@
-import TableMembership from "@/src/components/layouts/membership/table-membership";
+import TableMembership from "@/src/components/layouts/tiers/table-membership";
 import { buttonVariants } from "@/src/components/ui/button";
 import { Skeleton } from "@/src/components/ui/skeleton";
 import { cn } from "@/src/lib/utils";

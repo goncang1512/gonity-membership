@@ -47,9 +47,14 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Membership",
-      url: "/dashboard/membership",
+      title: "Tiers",
+      url: "/dashboard/tiers",
       icon: IconListDetails,
+    },
+    {
+      title: "Members",
+      url: "/dashboard/members",
+      icon: IconUsers,
     },
     {
       title: "Transactions",
@@ -70,11 +75,6 @@ const data = {
       title: "Projects",
       url: "#",
       icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
     },
   ],
   navSecondary: [

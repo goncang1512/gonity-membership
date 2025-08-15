@@ -7,7 +7,14 @@ import { auth } from "../lib/auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { chartColors } from "../utils/color-charts";
-import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
+import {
+  endOfMonth,
+  format,
+  isThisYear,
+  parse,
+  startOfMonth,
+  subMonths,
+} from "date-fns";
 
 export type CreateMembershipType = {
   name: string;
@@ -265,13 +272,27 @@ export async function getMembershipStats(userId: string) {
         format(s.createdAt, "yyyy-MM") === format(date, "yyyy-MM")
     ).length;
 
-    // hanya push kalau ada datanya
-    if (newMembers > 0 || cancellations > 0) {
-      months.push({ month: monthLabel, newMembers, cancellations });
-    }
+    months.push({ month: monthLabel, newMembers, cancellations });
   }
 
-  return months;
+  const activeIndexes = months
+    .map((m, i) => (m.newMembers > 0 || m.cancellations > 0 ? i : -1))
+    .filter((i) => i !== -1);
+
+  if (activeIndexes.length === 0) {
+    return []; // tidak ada data sama sekali
+  }
+
+  if (activeIndexes.length === 1) {
+    const idx = activeIndexes[0];
+    const startIdx = Math.max(0, idx - 1); // bulan sebelumnya jika ada
+    return months.slice(startIdx, idx + 1);
+  }
+
+  const firstIndex = activeIndexes[0];
+  const lastIndex = activeIndexes[activeIndexes.length - 1];
+
+  return months.slice(firstIndex, lastIndex + 1);
 }
 
 export const getAnalyticMembership = async () => {
@@ -287,7 +308,16 @@ export const getAnalyticMembership = async () => {
       select: {
         name: true,
         _count: {
-          select: { subscribe: true },
+          select: {
+            subscribe: {
+              where: {
+                createdAt: {
+                  gte: new Date(new Date().getFullYear(), 0, 1),
+                  lte: new Date(new Date().getFullYear(), 11, 31, 23, 59, 59), // akhir tahun ini
+                },
+              },
+            },
+          },
         },
       },
       orderBy: {
