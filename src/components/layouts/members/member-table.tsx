@@ -11,6 +11,7 @@ import { Card, CardContent } from "../../ui/card";
 import { getAllMembers } from "@/src/actions/members.load";
 import { $Enums } from "@prisma/client";
 import { format } from "date-fns";
+import PaginationPage from "../pagination-page";
 
 interface Member {
   name: string;
@@ -38,49 +39,60 @@ function StatusBadge({ status }: { status: $Enums.SubscriptionStatus }) {
   );
 }
 
-export async function MemberTable() {
-  const result = await getAllMembers();
+export async function MemberTable({ page }: { page?: string }) {
+  const result = await getAllMembers(Number(page ?? 1));
 
   return (
-    <Card>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>No.</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Membership Type</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Join Date</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {(result.data ?? []).map((member, i) => (
-              <TableRow key={member.id}>
-                <TableCell>{i + 1}</TableCell>
-                <TableCell className="flex items-center gap-2">
-                  {member.name}
-                </TableCell>
-                <TableCell>{member.email}</TableCell>
-                <TableCell>{member.membership.name}</TableCell>
-                <TableCell>
-                  <StatusBadge status={member.status} />
-                </TableCell>
-                <TableCell>
-                  {format(member.createdAt, "MMMM dd, yyyy")}
-                </TableCell>
-                <TableCell className="flex gap-2">
-                  <Eye className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                  <Edit className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                  <Trash className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                </TableCell>
+    <div className="grid gap-4">
+      <Card>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>No.</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Membership Type</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Join Date</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+            </TableHeader>
+            <TableBody>
+              {(result.data?.data ?? []).map((member, i) => (
+                <TableRow key={member.id}>
+                  <TableCell>
+                    {((result.data?.page ?? 1) - 1) * 10 + (i + 1)}
+                  </TableCell>
+                  <TableCell className="flex items-center gap-2">
+                    {member.name}
+                  </TableCell>
+                  <TableCell>{member.email}</TableCell>
+                  <TableCell>{member.membership.name}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={member.status} />
+                  </TableCell>
+                  <TableCell>
+                    {format(member.createdAt, "MMMM dd, yyyy")}
+                  </TableCell>
+                  <TableCell className="flex gap-2">
+                    <Eye className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                    <Edit className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                    <Trash className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      <div className="flex justify-end w-full">
+        <PaginationPage
+          totalHalaman={result.data?.totalPage ?? 1}
+          page={result.data?.page ?? 1}
+        />
+      </div>
+    </div>
   );
 }
