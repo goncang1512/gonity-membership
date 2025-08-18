@@ -14,6 +14,7 @@ import { MoreHorizontal } from "lucide-react";
 import { TransactionType } from "./stats-cards";
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import SendNotification from "./send-notification";
+import { format } from "date-fns";
 
 export default function TableTransactions({
   transactions,
@@ -41,7 +42,7 @@ export default function TableTransactions({
               <TableCell>{tx.id}</TableCell>
               <TableCell>{tx.customerName}</TableCell>
               <TableCell>{tx.tier.name}</TableCell>
-              <TableCell>{tx.amount}</TableCell>
+              <TableCell>Rp {tx.amount.toLocaleString("id-ID")}</TableCell>
               <TableCell>
                 <Badge
                   className={`${
@@ -60,7 +61,9 @@ export default function TableTransactions({
                 </Badge>
               </TableCell>
               <TableCell>{tx.method}</TableCell>
-              <TableCell>{String(tx?.paidAt ?? "-")}</TableCell>
+              <TableCell>
+                {tx.paidAt ? format(new Date(tx.paidAt), "dd-MM-yyyy") : "-"}
+              </TableCell>
               <TableCell>
                 <Popover>
                   <PopoverTrigger asChild>

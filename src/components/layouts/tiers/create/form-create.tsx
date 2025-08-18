@@ -20,7 +20,7 @@ export default function FormCreate({
       const formData = new FormData(e.currentTarget);
       const data = await createMembership(formData);
       if (data.status) {
-        router.push("/dashboard/membership");
+        router.push("/dashboard/tiers");
       }
     });
   };

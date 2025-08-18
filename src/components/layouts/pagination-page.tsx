@@ -1,3 +1,5 @@
+"use client";
+import { useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
@@ -17,13 +19,22 @@ export default function PaginationPage({
   totalHalaman,
   page,
 }: PaginationPageProps) {
+  const searchParams = useSearchParams();
+
+  // helper buat bikin query string baru tanpa hilangin yang lama
+  const createPageLink = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(newPage));
+    return `?${params.toString()}`;
+  };
+
   return (
     <Pagination className="w-max">
       <PaginationContent>
         {/* Tombol Previous */}
         {page > 1 && (
           <PaginationItem>
-            <PaginationPrevious href={`?page=${page - 1}`} />
+            <PaginationPrevious href={createPageLink(page - 1)} />
           </PaginationItem>
         )}
 
@@ -63,7 +74,10 @@ export default function PaginationPage({
 
             return (
               <PaginationItem key={p}>
-                <PaginationLink href={`?page=${p}`} isActive={p === page}>
+                <PaginationLink
+                  href={createPageLink(p as number)}
+                  isActive={p === page}
+                >
                   {p}
                 </PaginationLink>
               </PaginationItem>
@@ -74,7 +88,7 @@ export default function PaginationPage({
         {/* Tombol Next */}
         {page < totalHalaman && (
           <PaginationItem>
-            <PaginationNext href={`?page=${page + 1}`} />
+            <PaginationNext href={createPageLink(page + 1)} />
           </PaginationItem>
         )}
       </PaginationContent>

@@ -32,16 +32,6 @@ export default async function TransactionPage() {
       {/* Filters */}
       <FilterTransactions />
 
-      {/* Table Actions */}
-      <div className="flex gap-2">
-        <Button variant="outline" className="flex items-center gap-2">
-          <Download className="w-4 h-4" /> Export Data
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Settings className="w-4 h-4" /> Manage Columns
-        </Button>
-      </div>
-
       {/* Table */}
       <TableTransactions transactions={data.data ?? []} />
     </div>

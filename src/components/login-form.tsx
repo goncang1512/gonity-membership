@@ -25,7 +25,7 @@ export function LoginForm({
       {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
-        callbackURL: "/",
+        callbackURL: "/dashboard",
       },
       {
         onRequest: () => {

@@ -22,7 +22,7 @@ export default function FormEdit({
       const formData = new FormData(e.currentTarget);
       const data = await updateMembership(formData, tier_id);
       if (data.status) {
-        router.push("/dashboard/membership");
+        router.push("/dashboard/tiers");
       }
     });
   };

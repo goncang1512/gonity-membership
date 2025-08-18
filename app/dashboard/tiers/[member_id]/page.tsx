@@ -65,7 +65,7 @@ export default async function EditMembership({
             {/* Buttons */}
             <div className="flex justify-end space-x-2 pt-4 border-t">
               <Link
-                href={"/dashboard/membership"}
+                href={"/dashboard/tiers"}
                 className={cn(buttonVariants({ variant: "outline" }))}
               >
                 Cancel

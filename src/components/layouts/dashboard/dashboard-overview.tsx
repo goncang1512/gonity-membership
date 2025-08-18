@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, CardContent } from "../../ui/card";
 import { BadgeCheck, DollarSign, Star, Users } from "lucide-react";
+import { getDashboardStats } from "@/src/actions/members.load";
 
-export default function DashboardOverview() {
+export default async function DashboardOverview() {
+  const result = await getDashboardStats();
   const stats = [
     {
       title: "Total Users",
@@ -30,9 +32,15 @@ export default function DashboardOverview() {
     },
   ];
 
+  const statsRewrite = stats.map((item, index) => ({
+    ...item,
+    value: result?.data?.[index].value ?? item.value,
+    change: result.data?.[index].change ?? item.change,
+  }));
+
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat, i) => (
+      {statsRewrite.map((stat, i) => (
         <Card
           key={i}
           className="rounded-xl shadow-sm border border-neutral-200"

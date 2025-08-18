@@ -66,16 +66,6 @@ const data = {
       url: "/dashboard/api-management",
       icon: IconKey,
     },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
   ],
   navSecondary: [
     {

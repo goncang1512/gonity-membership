@@ -1,17 +1,22 @@
 "use client";
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEnd, Loader2 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
-import React from "react";
+import React, { useState } from "react";
 import { authClient } from "@/src/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | undefined>(undefined);
+
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
 
     await authClient.signUp.email(
@@ -22,14 +27,13 @@ export default function RegisterPage() {
         callbackURL: "/",
       },
       {
-        onRequest: (ctx) => {
-          console.log("REQUEST", ctx);
-        },
         onError: (ctx) => {
-          console.log("ERROR", ctx);
+          setMessage(ctx.error.message);
+          setLoading(false);
         },
         onSuccess: (ctx) => {
-          console.log("SUCCESS", ctx);
+          setLoading(false);
+          router.push("/dashboard");
         },
       }
     );
@@ -58,6 +62,7 @@ export default function RegisterPage() {
                     Sign in
                   </Link>
                 </div>
+                {message && <p className="text-red-500">{message}</p>}
               </div>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-3">
@@ -100,8 +105,12 @@ export default function RegisterPage() {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full">
-                  Registrasi
+                <Button
+                  disabled={loading}
+                  type="submit"
+                  className="w-full cursor-pointer"
+                >
+                  {loading && <Loader2 className="animate-spin" />} Registrasi
                 </Button>
               </div>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

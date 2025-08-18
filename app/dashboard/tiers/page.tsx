@@ -11,7 +11,7 @@ export default function MembershipPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Membership Tiers</h1>
         <Link
-          href={"/dashboard/membership/create"}
+          href={"/dashboard/tiers/create"}
           className={cn(
             buttonVariants({
               className:

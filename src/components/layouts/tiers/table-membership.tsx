@@ -68,7 +68,7 @@ export default async function TableMembership() {
               <div className="flex items-center gap-2 w-full justify-end">
                 <Link
                   prefetch={true}
-                  href={`/dashboard/membership/${tier.id}`}
+                  href={`/dashboard/tiers/${tier.id}`}
                   className={cn(buttonVariants({ variant: "outline" }))}
                 >
                   <Pencil className="h-4 w-4" />

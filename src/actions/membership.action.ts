@@ -7,14 +7,7 @@ import { auth } from "../lib/auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { chartColors } from "../utils/color-charts";
-import {
-  endOfMonth,
-  format,
-  isThisYear,
-  parse,
-  startOfMonth,
-  subMonths,
-} from "date-fns";
+import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
 
 export type CreateMembershipType = {
   name: string;
@@ -128,7 +121,7 @@ export const deleteMembership = async (tier_id: string) => {
       },
     });
 
-    revalidatePath("/dashboard/membership");
+    revalidatePath("/dashboard/tiers");
     return {
       status: true,
       statusCode: 201,

@@ -1,49 +1,102 @@
-import { Input } from "@/src/components/ui/input";
-import { Button } from "@/src/components/ui/button";
-import { Filter, Plus } from "lucide-react";
+"use client";
+import React, { useCallback, useState } from "react";
+import { Button } from "../../ui/button";
+import { Filter, Search } from "lucide-react";
+import { Input } from "../../ui/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "../../ui/select";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export function MemberSearchFilter() {
+export default function MemberSearchFilter() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [filterData, setFilterData] = useState<{
+    status: string | undefined;
+    name: string | undefined;
+  }>({
+    status: undefined,
+    name: undefined,
+  });
+
+  const createQueryString = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (filterData.name) {
+      params.set("name", String(filterData.name));
+    } else {
+      params.delete("name");
+    }
+
+    if (filterData.status && filterData.status !== "all") {
+      params.set("status", String(filterData.status));
+    } else {
+      params.delete("status");
+    }
+
+    return params.toString();
+  }, [searchParams, filterData]);
+
+  const handleClick = () => {
+    router.push(`/dashboard/members?${createQueryString()}`);
+  };
+
+  const handleReset = () => {
+    setFilterData({ name: "", status: "" });
+    router.push("/dashboard/members");
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
-      <div className="flex w-full sm:w-auto gap-2 items-center">
-        <Input
-          placeholder="Search members by name or email..."
-          className="w-full sm:w-64"
-        />
-        <Select>
-          <SelectTrigger className="w-40">
-            <SelectValue placeholder="Membership Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="standard">Standard</SelectItem>
-            <SelectItem value="premium">Premium</SelectItem>
-            <SelectItem value="enterprise">Enterprise</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-32">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="inactive">Inactive</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="suspended">Suspended</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-[0.3fr_1fr_0.3fr] gap-2 mb-5">
+      <Select
+        value={filterData.status}
+        onValueChange={(value) =>
+          setFilterData({ ...filterData, status: value })
+        }
+      >
+        <SelectTrigger className="w-full capitalize">
+          <Filter className="w-4 h-4" />
+          <SelectValue className="capitalize" placeholder="Filter by Status" />
+        </SelectTrigger>
 
-      <Button className="flex items-center gap-2">
-        <Plus className="w-4 h-4" /> Add New Member
+        <SelectContent>
+          <SelectGroup>
+            {["all", "active", "expired", "canceled", "pending"].map(
+              (value) => (
+                <SelectItem value={value} className="capitalize">
+                  {value}
+                </SelectItem>
+              )
+            )}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <div className="max-md:col-span-2 col-span-1 flex gap-2">
+        <div className="flex-1">
+          <Input
+            value={filterData.name}
+            onChange={(e) =>
+              setFilterData({ ...filterData, name: e.target.value })
+            }
+            placeholder="Search by Customer Name..."
+          />
+        </div>
+        <Button onClick={handleClick} className="cursor-pointer">
+          <Search className="md:hidden flex" />
+          <span className="md:flex hidden">Apply Filters</span>
+        </Button>
+      </div>
+      <Button
+        onClick={handleReset}
+        variant="outline"
+        className="max-md:col-span-2 cursor-pointer"
+      >
+        Clear Filters
       </Button>
     </div>
   );

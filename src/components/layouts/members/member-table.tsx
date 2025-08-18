@@ -39,8 +39,16 @@ function StatusBadge({ status }: { status: $Enums.SubscriptionStatus }) {
   );
 }
 
-export async function MemberTable({ page }: { page?: string }) {
-  const result = await getAllMembers(Number(page ?? 1));
+export async function MemberTable({
+  page,
+  status,
+  name,
+}: {
+  page?: string;
+  status?: string;
+  name?: string;
+}) {
+  const result = await getAllMembers(Number(page ?? 1), 10, name, status);
 
   return (
     <div className="grid gap-4">
