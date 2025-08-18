@@ -12,15 +12,8 @@ import { getAllMembers } from "@/src/actions/members.load";
 import { $Enums } from "@prisma/client";
 import { format } from "date-fns";
 import PaginationPage from "../pagination-page";
-
-interface Member {
-  name: string;
-  email: string;
-  type: string;
-  status: "Active" | "Inactive" | "Pending" | "Suspended";
-  joinDate: string;
-  avatar: string;
-}
+import { Badge } from "../../ui/badge";
+import { redirect } from "next/navigation";
 
 function StatusBadge({ status }: { status: $Enums.SubscriptionStatus }) {
   const colors: Record<$Enums.SubscriptionStatus, string> = {
@@ -30,13 +23,7 @@ function StatusBadge({ status }: { status: $Enums.SubscriptionStatus }) {
     pending: "bg-orange-100 text-orange-700",
   };
 
-  return (
-    <span
-      className={`px-2 py-1 rounded-full text-xs font-medium ${colors[status]} capitalize`}
-    >
-      {status}
-    </span>
-  );
+  return <Badge className={`${colors[status]} capitalize`}>{status}</Badge>;
 }
 
 export async function MemberTable({
@@ -49,6 +36,21 @@ export async function MemberTable({
   name?: string;
 }) {
   const result = await getAllMembers(Number(page ?? 1), 10, name, status);
+
+  const totalPage = Number(result.data?.totalPage ?? 1);
+  const currentPage = Number(page ?? 1);
+
+  if (currentPage > totalPage && currentPage !== 1) {
+    const query: Record<string, string> = {};
+
+    if (name) query.name = name;
+    if (status) query.status = status;
+    query.page = totalPage ? String(totalPage) : "1";
+
+    const urlSearch = new URLSearchParams(query);
+
+    return redirect(`?${urlSearch.toString()}`);
+  }
 
   return (
     <div className="grid gap-4">

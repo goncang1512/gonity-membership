@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "../../ui/button";
 import { Filter, Search } from "lucide-react";
 import { Input } from "../../ui/input";
@@ -23,6 +23,15 @@ export default function MemberSearchFilter() {
     status: undefined,
     name: undefined,
   });
+
+  useEffect(() => {
+    const name = searchParams.get("name");
+    const status = searchParams.get("status");
+    setFilterData({
+      status: status ?? "",
+      name: name ? name : "",
+    });
+  }, [searchParams]);
 
   const createQueryString = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
