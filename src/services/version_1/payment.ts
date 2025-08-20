@@ -1,27 +1,73 @@
+import PaymentController from "@/src/controller/payment";
 import prisma from "@/src/lib/prisma-client";
+import {
+  BankTransferType,
+  CreditCardPaymentType,
+  CstoreType,
+  EchannelType,
+} from "@/src/utils/types/payment.types";
 import { Hono } from "hono";
 
-const paymentApp = new Hono().post("/:status", async (c) => {
-  try {
-    const body = await c.req.json();
+type BodyTypePost = {
+  transaction_id: string;
+  method: string;
+  via: string;
+  full_name: string;
+  email: string;
+  token_card: string;
+};
 
-    const hasSuscribe = await prisma.subscribe.findFirst({
+const paymentApp = new Hono();
+
+paymentApp.post("/charge", async (c) => {
+  const body: BodyTypePost = await c.req.json();
+  try {
+    const paymentCtrl = new PaymentController();
+
+    const transaction = await prisma.transaction.findFirst({
       where: {
-        memberId: body.user_id,
+        id: body.transaction_id,
       },
       select: {
         id: true,
+        amount: true,
       },
     });
+
+    let results = null;
+
+    if (body.method === "bank_transfer" && body.via !== "mandiri") {
+      results = await paymentCtrl.bankTransfer({
+        ...body,
+        amount: transaction?.amount,
+      } as BankTransferType);
+    } else if (body.method === "bank_transfer" && body.via === "mandiri") {
+      results = await paymentCtrl.echannelPayment({
+        ...body,
+        amount: transaction?.amount,
+      } as EchannelType);
+    } else if (body.method === "cstore") {
+      results = await paymentCtrl.cstorePayment({
+        ...body,
+        amount: transaction?.amount,
+      } as CstoreType);
+    } else if (body.method === "credit_card") {
+      results = await paymentCtrl.creditCardPayment({
+        ...body,
+        amount: transaction?.amount,
+      } as CreditCardPaymentType);
+    } else {
+      throw new Error("Invalid error");
+    }
 
     return c.json(
       {
         status: true,
-        statusCode: 201,
+        statusCode: results.status_code,
         message: "Success payment membership",
-        data: null,
+        data: results,
       },
-      { status: 201 }
+      { status: results.status_code }
     );
   } catch (error) {
     return c.json(
