@@ -8,13 +8,11 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { Badge } from "@/src/components/ui/badge";
-import { Navbar } from "@/src/components/layouts/navbar";
+import PricingSubscribe from "@/src/components/layouts/home-page/pricing-subscribe";
 
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-
       <div className="flex flex-col">
         {/* Hero Section */}
         <section className="bg-blue-50 py-20">
@@ -104,57 +102,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-center mb-12">
             Simple, Transparent Pricing
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Free</CardTitle>
-                <div className="text-2xl font-bold">$0/month</div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li>✔ Basic Analytics</li>
-                  <li>✔ Limited API Access</li>
-                  <li>✔ Standard Support</li>
-                </ul>
-                <Button variant="outline" className="mt-4 w-full">
-                  Start Free
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Pro</CardTitle>
-                <Badge className="mb-2">Most Popular</Badge>
-                <div className="text-2xl font-bold">$49/month</div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li>✔ Advanced Analytics</li>
-                  <li>✔ Full API Access</li>
-                  <li>✔ Priority Support</li>
-                </ul>
-                <Button className="mt-4 w-full">Choose Pro</Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Enterprise</CardTitle>
-                <div className="text-2xl font-bold">Custom</div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li>✔ All Pro Features</li>
-                  <li>✔ Dedicated Account Manager</li>
-                  <li>✔ Custom Integrations</li>
-                </ul>
-                <Button variant="outline" className="mt-4 w-full">
-                  Contact Sales
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <PricingSubscribe />
         </section>
 
         {/* Footer */}

@@ -34,3 +34,9 @@
     document.head.appendChild(script);
   }
 })();
+
+const MembershipNew3ds = {
+  getCardToken: (cardData, options) => {
+    MidtransNew3ds.getCardToken(cardData, options);
+  },
+};

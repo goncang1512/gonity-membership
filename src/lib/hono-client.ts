@@ -1,4 +1,6 @@
 import { hc } from "hono/client";
-import { AppType } from "@/app/api/[...route]/route";
+import { AppType } from "../services";
 
-export const client = hc<AppType>(process.env.NEXT_PUBLIC_BETTER_AUTH_URL!);
+const client = hc<AppType>(process.env.NEXT_PUBLIC_BETTER_AUTH_URL!);
+
+export { client };

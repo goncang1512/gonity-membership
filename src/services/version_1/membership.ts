@@ -21,6 +21,7 @@ const memberApp = new Hono<{ Variables: Variables }>().get("/", async (c) => {
       description: true,
       badge: true,
       duration: true,
+      status: true,
       permissions: {
         select: {
           id: true,
@@ -31,6 +32,9 @@ const memberApp = new Hono<{ Variables: Variables }>().get("/", async (c) => {
       },
       price: true,
       createdAt: true,
+    },
+    orderBy: {
+      price: "desc",
     },
   });
 

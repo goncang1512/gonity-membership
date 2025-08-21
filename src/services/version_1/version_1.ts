@@ -10,12 +10,12 @@ const app = new Hono();
 
 // CORS middleware async
 app.use("/*", allowOrigins);
-
 app.use("/*", verifyApi);
 
-app.route("/membership", memberApp);
-app.route("/transactions", transactionApp);
-app.route("/payments", paymentApp);
-app.route("/client", cardClientApp);
+const routes = app
+  .route("/membership", memberApp)
+  .route("/transactions", transactionApp)
+  .route("/payments", paymentApp)
+  .route("/client", cardClientApp);
 
-export default app;
+export default routes;
