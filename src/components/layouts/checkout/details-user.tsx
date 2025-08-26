@@ -35,6 +35,7 @@ export default function DetailsUser() {
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
             <Input
+              name="name"
               value={details.name}
               onChange={(e) => setDetails({ ...details, name: e.target.value })}
               id="name"
@@ -48,6 +49,7 @@ export default function DetailsUser() {
               onChange={(e) =>
                 setDetails({ ...details, email: e.target.value })
               }
+              name="email"
               id="email"
               type="email"
               placeholder="john.doe@example.com"
@@ -56,6 +58,7 @@ export default function DetailsUser() {
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="phone">Phone Number (Optional)</Label>
             <Input
+              name="phone"
               value={details.phone}
               onChange={(e) =>
                 setDetails({ ...details, phone: e.target.value })

@@ -55,3 +55,10 @@ export type CstoreType = {
   full_name: string;
   email: string;
 };
+
+export type EwalletType = {
+  via: "gopay" | "shoppepay";
+  amount: number;
+  full_name: string;
+  email: string;
+};

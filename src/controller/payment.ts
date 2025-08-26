@@ -6,6 +6,7 @@ import {
   CreditCardPaymentType,
   CstoreType,
   EchannelType,
+  EwalletType,
 } from "../utils/types/payment.types";
 
 class PaymentController {
@@ -161,6 +162,22 @@ class PaymentController {
       credit_card: {
         token_id: body.token_card,
         authentication: true,
+      },
+      customer_details: {
+        first_name: body.full_name,
+        email: body.email,
+      },
+    });
+
+    return payment;
+  };
+
+  ewalletPayment = async (body: EwalletType) => {
+    const payment = await coreApi.charge({
+      payment_type: body.via,
+      transaction_details: {
+        order_id: `GPN${generateId(9).toUpperCase()}`,
+        gross_amount: body.amount,
       },
       customer_details: {
         first_name: body.full_name,
