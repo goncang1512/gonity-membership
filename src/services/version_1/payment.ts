@@ -107,6 +107,11 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
           ...body,
           amount: transaction?.amount,
         } as CreditCardPaymentType);
+      } else if (body.via === "qris") {
+        results = await paymentCtrl.qrisPayment({
+          ...body,
+          amount: transaction.amount,
+        } as EwalletType);
       } else if (body.method === "ewallet") {
         results = await paymentCtrl.ewalletPayment({
           ...body,

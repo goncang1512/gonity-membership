@@ -94,11 +94,18 @@ export default async function PaymentMethod() {
           </Accordion>
 
           <Label
-            htmlFor="qrcode"
+            htmlFor="qris"
             className="flex items-center justify-between border rounded-lg px-4 py-3 cursor-pointer  transition"
           >
             <div className="flex items-center gap-3">
-              <RadioGroupItem value="qrcode" id="qrcode" />
+              <input
+                name={`method-qris`}
+                defaultValue="qris"
+                hidden
+                readOnly
+                required
+              />
+              <RadioGroupItem value="qris" id="qris" />
               <QrCode className="h-5 w-5 text-gray-600" />
               <span>QRIS</span>
             </div>

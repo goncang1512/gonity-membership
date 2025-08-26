@@ -57,7 +57,7 @@ export type CstoreType = {
 };
 
 export type EwalletType = {
-  via: "gopay" | "shoppepay";
+  via: "gopay" | "shoppepay" | "qris";
   amount: number;
   full_name: string;
   email: string;

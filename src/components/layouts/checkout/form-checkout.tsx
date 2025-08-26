@@ -52,8 +52,6 @@ export default function FormCheckout({
       );
 
       const results = await res.json();
-
-      console.log(results);
     } catch (error) {
       console.error(error);
     } finally {

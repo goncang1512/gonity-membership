@@ -187,6 +187,25 @@ class PaymentController {
 
     return payment;
   };
+
+  qrisPayment = async (body: EwalletType) => {
+    const payment = await coreApi.charge({
+      payment_type: "qris",
+      transaction_details: {
+        order_id: `GPN${generateId(9).toUpperCase()}`,
+        gross_amount: body.amount,
+      },
+      customer_details: {
+        first_name: body.full_name,
+        email: body.email,
+      },
+      qris: {
+        acquirer: "gopay",
+      },
+    });
+
+    return payment;
+  };
 }
 
 export default PaymentController;
