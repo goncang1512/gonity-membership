@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/src/components/ui/button";
 import {
   Card,
@@ -7,8 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
-import { Badge } from "@/src/components/ui/badge";
 import PricingSubscribe from "@/src/components/layouts/home-page/pricing-subscribe";
+import { Suspense } from "react";
+import { Skeleton } from "@/src/components/ui/skeleton";
 
 export default function HomePage() {
   return (
@@ -102,7 +101,17 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-center mb-12">
             Simple, Transparent Pricing
           </h2>
-          <PricingSubscribe />
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-3 gap-3">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Skeleton key={index} className="w-full h-56" />
+                ))}
+              </div>
+            }
+          >
+            <PricingSubscribe />
+          </Suspense>
         </section>
 
         {/* Footer */}

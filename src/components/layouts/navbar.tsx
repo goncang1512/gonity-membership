@@ -24,14 +24,14 @@ export function Navbar() {
           <Link href="/" className="text-blue-600">
             Home
           </Link>
-          <Link href="#features" className="text-gray-600 hover:text-blue-600">
+          <Link href="/#features" className="text-gray-600 hover:text-blue-600">
             Features
           </Link>
-          <Link href="#pricing" className="text-gray-600 hover:text-blue-600">
+          <Link href="/#pricing" className="text-gray-600 hover:text-blue-600">
             Pricing
           </Link>
           <Link
-            href="#testimonials"
+            href="/#testimonials"
             className="text-gray-600 hover:text-blue-600"
           >
             Testimonials

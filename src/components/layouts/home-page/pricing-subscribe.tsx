@@ -1,18 +1,16 @@
-"use client";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { buttonVariants } from "../../ui/button";
 import { Badge } from "../../ui/badge";
-import { useGetMembership } from "@/src/module/use-get-membership";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
+import { getMyTierMembership } from "@/src/actions/my-tier";
 
-export default function PricingSubscribe() {
-  const { data } = useGetMembership();
-
+export default async function PricingSubscribe() {
+  const data = await getMyTierMembership();
   return (
     <div className="grid md:grid-cols-3 gap-6">
-      {(data ?? []).map((item) => {
+      {(data.data ?? []).map((item) => {
         const buttonText =
           item.name === "Enterprise"
             ? "Contact Sales"

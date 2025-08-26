@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import QueryProviders from "@/src/providers/query-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,9 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-poppins">
-        <QueryProviders>{children}</QueryProviders>
-      </body>
+      <body className="font-poppins">{children}</body>
     </html>
   );
 }
