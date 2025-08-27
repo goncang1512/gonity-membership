@@ -34,7 +34,7 @@ export default function FormGenerate({ apiKey }: { apiKey?: string }) {
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <input
-        type="password"
+        type="text"
         readOnly
         value={apiKey}
         className="w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-mono text-gray-600"

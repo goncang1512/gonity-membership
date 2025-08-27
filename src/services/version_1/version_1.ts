@@ -16,6 +16,6 @@ const routes = app
   .route("/membership", memberApp)
   .route("/transactions", transactionApp)
   .route("/payments", paymentApp)
-  .route("/client", cardClientApp);
+  .route("/script", cardClientApp);
 
 export default routes;

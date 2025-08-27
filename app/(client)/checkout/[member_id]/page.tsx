@@ -1,14 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
-import { Button } from "@/src/components/ui/button";
-import { CreditCard, Wallet, Landmark } from "lucide-react";
+import { Card, CardContent } from "@/src/components/ui/card";
 import SubscriptionSummary from "@/src/components/layouts/checkout/subscription-summary";
 import { Suspense } from "react";
 import { Skeleton } from "@/src/components/ui/skeleton";

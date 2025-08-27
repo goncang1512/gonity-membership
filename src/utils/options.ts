@@ -1,6 +1,6 @@
 export const options = {
   headers: {
-    Authorization: `Bearer Q1VPvQsZfjtIX-GB-1FRMdYWvXRFAlI2HCtHodTctU4`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MEMBERSHIP_KEY}`,
     Origin: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   },
 };

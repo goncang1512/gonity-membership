@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Label } from "../../ui/label";
-import { CreditCard, Landmark, QrCode, Store, Wallet } from "lucide-react";
+import { Landmark, QrCode, Store, Wallet } from "lucide-react";
 import { client } from "@/src/lib/hono-client";
 import { options } from "@/src/utils/options";
 import {
@@ -11,6 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../ui/accordion";
+import CreditPayment from "./credit-payment";
+import { AccordionCard, RadioGroupProvider } from "./radio-group-context";
 
 export default async function PaymentMethod() {
   const res = await client.api.v1.payments.via.$get({}, options);
@@ -45,7 +47,7 @@ export default async function PaymentMethod() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <RadioGroup name="payment_method" className="space-y-3">
+        <RadioGroupProvider>
           <Accordion type="single" collapsible className="grid gap-5">
             {paymentsMethod.map((has) => {
               return (
@@ -91,6 +93,16 @@ export default async function PaymentMethod() {
                 </AccordionItem>
               );
             })}
+
+            <AccordionItem
+              value={"credit_card"}
+              className="border rounded-lg last:border-b-1"
+            >
+              <AccordionCard />
+              <AccordionContent className="w-full px-5">
+                <CreditPayment />
+              </AccordionContent>
+            </AccordionItem>
           </Accordion>
 
           <Label
@@ -110,18 +122,7 @@ export default async function PaymentMethod() {
               <span>QRIS</span>
             </div>
           </Label>
-
-          <Label
-            htmlFor="card"
-            className="flex items-center justify-between border rounded-lg px-4 py-3 cursor-pointer  transition"
-          >
-            <div className="flex items-center gap-3">
-              <RadioGroupItem value="card" id="card" />
-              <CreditCard className="h-5 w-5 text-gray-600" />
-              <span>Credit/Debit Card</span>
-            </div>
-          </Label>
-        </RadioGroup>
+        </RadioGroupProvider>
       </CardContent>
     </Card>
   );
