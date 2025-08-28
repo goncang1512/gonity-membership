@@ -1,3 +1,4 @@
+"use client";
 import { LoginForm } from "@/src/components/login-form";
 import React from "react";
 

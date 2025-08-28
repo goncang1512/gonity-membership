@@ -1,4 +1,3 @@
-"use client";
 import { GalleryVerticalEnd, Loader2 } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
