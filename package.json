@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run minify",
+    "build": "next build && npm run minify && npm run generate",
     "start": "next start",
     "lint": "next lint",
     "generate": "npx prisma generate && npx prisma db push",

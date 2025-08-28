@@ -40,7 +40,12 @@ export default function TableTransactions({
           {transactions.map((tx) => (
             <TableRow key={tx.id}>
               <TableCell>{tx.id}</TableCell>
-              <TableCell>{tx.customerName}</TableCell>
+              <TableCell>
+                <div>
+                  <p>{tx.customerName}</p>
+                  <p className="text-sm text-neutral-600">{tx.customerEmail}</p>
+                </div>
+              </TableCell>
               <TableCell>{tx.tier.name}</TableCell>
               <TableCell>Rp {tx.amount.toLocaleString("id-ID")}</TableCell>
               <TableCell>

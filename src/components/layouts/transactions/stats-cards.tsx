@@ -5,6 +5,7 @@ import { $Enums } from "@prisma/client";
 export type TransactionType = {
   id: string;
   customerName: string;
+  customerEmail: string;
   amount: number;
   status: $Enums.TransactionEnum;
   method: string;

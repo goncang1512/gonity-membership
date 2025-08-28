@@ -14,6 +14,7 @@ export const getAllTransactions = async () => {
       select: {
         id: true,
         customerName: true,
+        customerEmail: true,
         tier: {
           select: {
             name: true,
