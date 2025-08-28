@@ -9,10 +9,10 @@ export default function LayoutClient({
 }) {
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "http://localhost:3000/assets/deliver.min.js";
+    script.src = `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/assets/deliver.min.js`;
     script.async = true;
     script.setAttribute("api-key", process.env.NEXT_PUBLIC_MEMBERSHIP_KEY!);
-    script.setAttribute("url-api", "http://localhost:3000");
+    script.setAttribute("url-api", process.env.NEXT_PUBLIC_BETTER_AUTH_URL!);
 
     document.body.appendChild(script);
 
