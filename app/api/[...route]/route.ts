@@ -2,7 +2,7 @@ import { handle } from "hono/vercel";
 
 import { app } from "@/src/services/index";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export const GET = handle(app);
 export const PUT = handle(app);
