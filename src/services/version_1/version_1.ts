@@ -5,6 +5,7 @@ import { allowOrigins } from "@/src/middleware/allow-origins";
 import transactionApp from "./transaction";
 import paymentApp from "./payment";
 import cardClientApp from "./card-client";
+import subscribeApp from "./subscribe";
 
 const app = new Hono();
 
@@ -16,6 +17,7 @@ const routes = app
   .route("/membership", memberApp)
   .route("/transactions", transactionApp)
   .route("/payments", paymentApp)
-  .route("/script", cardClientApp);
+  .route("/script", cardClientApp)
+  .route("/subscribe", subscribeApp);
 
 export default routes;

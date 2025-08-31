@@ -6,7 +6,7 @@ export const getMyTierMembership = async () => {
     const res = await client.api.v1.membership.$get({}, options);
 
     if (!res.ok) {
-      throw new Error("Invalid get books list");
+      throw new Error("Invalid get membership list");
     }
 
     const data = await res.json();

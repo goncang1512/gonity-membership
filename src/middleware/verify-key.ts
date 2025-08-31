@@ -6,6 +6,13 @@ export const verifyApi = async (c: Context, next: Next) => {
     const bearer = c.req.header("Authorization");
     const key = bearer?.split(" ")[1];
 
+    const path = c.req.path; // path request
+
+    if (path.startsWith("/api/v1/subscribe/check/")) {
+      c.set("admin_id", "system");
+      return await next();
+    }
+
     if (!key) {
       return c.json(
         {

@@ -5,12 +5,36 @@ import { auth } from "../lib/auth";
 import prisma from "../lib/prisma-client";
 import { revalidatePath } from "next/cache";
 import { generateId } from "better-auth";
+import { client } from "../lib/hono-client";
+import { options } from "../utils/options";
+import { Enterprise, Pro } from "../utils/permission";
+import AppError from "../utils/app-error";
 
 export const generateApiKey = async () => {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
+
+    const res = await client.api.v1.subscribe.check[":user_id"].$post(
+      {
+        param: {
+          user_id: String(session?.user.id),
+        },
+        json: {
+          permission: [...Enterprise, ...Pro],
+        },
+      },
+      options
+    );
+
+    const result = await res.json();
+
+    let expiresIn: number | null = 60 * 60 * 24 * 7;
+
+    if (result.data) {
+      expiresIn = null;
+    }
 
     await prisma.apikey.deleteMany({
       where: {
@@ -21,7 +45,7 @@ export const generateApiKey = async () => {
     await auth.api.createApiKey({
       body: {
         name: "Membership API KEY",
-        expiresIn: 60 * 60 * 24 * 7,
+        expiresIn: expiresIn,
         userId: session?.user.id, // server-only
         prefix: "proj_",
         remaining: 100, // server-only
@@ -35,7 +59,12 @@ export const generateApiKey = async () => {
 
     revalidatePath("/dashboard/api-management");
   } catch (error) {
-    console.log(error);
+    return {
+      status: false,
+      statusCode: 500,
+      message: "Internal Server Error",
+      data: null,
+    };
   }
 };
 
@@ -54,7 +83,12 @@ export const getApiKey = async () => {
       },
     });
   } catch (error) {
-    console.log(error);
+    return {
+      status: false,
+      statusCode: 500,
+      message: "Internal Server Error",
+      data: null,
+    };
   }
 };
 
@@ -65,6 +99,32 @@ export const createAuthroizeURIs = async (
     const session = await auth.api.getSession({
       headers: await headers(),
     });
+
+    const res = await client.api.v1.subscribe.check[":user_id"].$post(
+      {
+        param: {
+          user_id: String(session?.user.id),
+        },
+        json: {
+          permission: Enterprise,
+        },
+      },
+      options
+    );
+
+    const result = await res.json();
+
+    if (!result.data) {
+      const getUris = await prisma.authorizeUri.count({
+        where: {
+          userId: String(session?.user.id),
+        },
+      });
+
+      if (getUris >= 5) {
+        throw new AppError("Limited Authorized redirect URIs");
+      }
+    }
 
     // 1. Create untuk ID new-
     const createData = body.filter(
@@ -97,6 +157,15 @@ export const createAuthroizeURIs = async (
       data: null,
     };
   } catch (error) {
+    if (error instanceof AppError) {
+      return {
+        status: false,
+        statusCode: error.statusCode,
+        message: error.message,
+        data: null,
+      };
+    }
+
     return {
       status: false,
       statusCode: 500,
