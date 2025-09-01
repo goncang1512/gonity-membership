@@ -342,3 +342,28 @@ export const getAnalyticMembership = async () => {
     };
   }
 };
+
+export const deleteMember = async (subscribe_id: string) => {
+  try {
+    const result = await prisma.subscribe.delete({
+      where: {
+        id: subscribe_id,
+      },
+    });
+
+    revalidatePath("/dashboard/members");
+    return {
+      status: true,
+      statusCode: 201,
+      message: "Success",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      statusCode: 500,
+      message: "Internal Server Error",
+      data: null,
+    };
+  }
+};

@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import PaginationPage from "../pagination-page";
 import { Badge } from "../../ui/badge";
 import { redirect } from "next/navigation";
+import DeleteMember from "./delete-member";
 
 function StatusBadge({ status }: { status: $Enums.SubscriptionStatus }) {
   const colors: Record<$Enums.SubscriptionStatus, string> = {
@@ -88,7 +89,7 @@ export async function MemberTable({
                   <TableCell className="flex gap-2">
                     <Eye className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
                     <Edit className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                    <Trash className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                    <DeleteMember subscribe_id={member.id} />
                   </TableCell>
                 </TableRow>
               ))}

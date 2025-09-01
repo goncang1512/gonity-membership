@@ -3,6 +3,8 @@ import { auth } from "../lib/auth";
 import prisma from "../lib/prisma-client";
 import StatsMembership from "../utils/stats-dashboard";
 import { $Enums } from "@prisma/client";
+import { subDays } from "date-fns";
+import { UserCheck, UserMinus, UserPlus, Users } from "lucide-react";
 
 export const getAllMembers = async (
   page = 1,
@@ -131,4 +133,64 @@ export async function getDashboardStats() {
       data: null,
     };
   }
+}
+
+export async function getOverviewCards() {
+  const now = new Date();
+  const last30Days = subDays(now, 30);
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Query paralel biar lebih cepat
+  const [totalMembers, activeMembers, pendingMembers, newThisMonth] =
+    await Promise.all([
+      prisma.subscribe.count({
+        where: {
+          userId: String(session?.user.id),
+        },
+      }), // Total semua
+      prisma.subscribe.count({
+        where: { status: "active", userId: String(session?.user.id) },
+      }),
+      prisma.subscribe.count({
+        where: { status: "pending", userId: String(session?.user.id) },
+      }),
+      prisma.subscribe.count({
+        where: {
+          userId: String(session?.user.id),
+          createdAt: {
+            gte: last30Days,
+          },
+        },
+      }),
+    ]);
+
+  return [
+    {
+      title: "Total Members",
+      description: "Platform wide",
+      value: totalMembers,
+      icon: Users,
+    },
+    {
+      title: "Active Members",
+      description: "Currently subscribed",
+      value: activeMembers,
+      icon: UserCheck,
+    },
+    {
+      title: "Pending Members",
+      description: "Awaiting approval",
+      value: pendingMembers,
+      icon: UserMinus,
+    },
+    {
+      title: "New This Month",
+      description: "Last 30 days",
+      value: newThisMonth,
+      icon: UserPlus,
+    },
+  ];
 }

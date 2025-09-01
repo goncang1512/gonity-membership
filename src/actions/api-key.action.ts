@@ -129,8 +129,8 @@ export const createAuthroizeURIs = async (
         },
       });
 
-      if (getUris >= 5) {
-        throw new AppError("Limited Authorized redirect URIs");
+      if (getUris >= 3) {
+        throw new AppError("Limited Authorized redirect URIs", 422);
       }
     }
 

@@ -19,6 +19,7 @@ export default function ListUri({
     []
   );
   const [isPending, setPending] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (data) {
@@ -29,9 +30,14 @@ export default function ListUri({
   const handleCrateUri = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPending(true);
+    setMessage("");
 
     startTransition(async () => {
-      await createAuthroizeURIs(inputState);
+      const res = await createAuthroizeURIs(inputState);
+
+      if (!res.status && res.statusCode === 422) {
+        setMessage(res.message);
+      }
       setPending(false);
     });
   };
@@ -48,6 +54,9 @@ export default function ListUri({
 
   return (
     <>
+      <p className="pb-5 text-center italic text-red-500">
+        {message}
+      </p>
       <form onSubmit={handleCrateUri} className="grid grid-cols-2 gap-5">
         {inputState.map((item, index) => {
           return (

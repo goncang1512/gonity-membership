@@ -16,7 +16,17 @@ export default async function MembersPage({
   const query = await searchParams;
   return (
     <div className="bg-white p-4">
-      <MembersOverview />
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton className="w-full h-44" />
+            ))}
+          </div>
+        }
+      >
+        <MembersOverview />
+      </Suspense>
       <MemberSearchFilter />
 
       <Suspense fallback={<Skeleton className="w-full h-52" />}>

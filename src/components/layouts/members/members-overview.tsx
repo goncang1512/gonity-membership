@@ -1,3 +1,4 @@
+import { getOverviewCards } from "@/src/actions/members.load";
 import {
   Card,
   CardTitle,
@@ -6,6 +7,7 @@ import {
 } from "@/src/components/ui/card";
 import { LucideType } from "@/src/utils/type.data";
 import { UserCheck, UserMinus, UserPlus, Users } from "lucide-react";
+import { title } from "process";
 
 interface OverviewCardProps {
   title: string;
@@ -36,33 +38,22 @@ function OverviewCard({
   );
 }
 
-export function MembersOverview() {
+export async function MembersOverview() {
+  const data = await getOverviewCards();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <OverviewCard
-        title="Total Members"
-        description="Platform wide"
-        value={12}
-        icon={Users}
-      />
-      <OverviewCard
-        title="Active Members"
-        description="Currently subscribed"
-        value={7}
-        icon={UserCheck}
-      />
-      <OverviewCard
-        title="Pending Members"
-        description="Awaiting approval"
-        value={2}
-        icon={UserMinus}
-      />
-      <OverviewCard
-        title="New This Month"
-        description="Last 30 days"
-        value={0}
-        icon={UserPlus}
-      />
+      {data.map((item) => {
+        return (
+          <OverviewCard
+            key={title}
+            title={item.title}
+            description={item.description}
+            value={item.value}
+            icon={item.icon}
+          />
+        );
+      })}
     </div>
   );
 }
