@@ -80,6 +80,7 @@ export const getApiKey = async () => {
       },
       select: {
         key: true,
+        expiresAt: true,
       },
     });
 
@@ -87,7 +88,7 @@ export const getApiKey = async () => {
       status: true,
       statusCode: 200,
       message: "Success get api key",
-      data: apiKey?.key,
+      data: apiKey,
     };
   } catch (error) {
     return {

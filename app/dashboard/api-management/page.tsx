@@ -15,9 +15,6 @@ export default function ApiKeyManagement() {
         <Suspense fallback={<Skeleton className="w-full h-16" />}>
           <GenerateCode />
         </Suspense>
-        <p className="mt-2 text-xs text-gray-400">
-          Last used: June 12, 2024 at 10:30 AM (UTC)
-        </p>
         <p className="mt-1 text-xs text-red-500">
           ⚠️ Never expose your API key in client-side code.
         </p>
