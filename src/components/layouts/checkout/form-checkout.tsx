@@ -12,6 +12,8 @@ import { Loader2 } from "lucide-react";
 import { getCardTokenAsync } from "@/src/utils/get-token-card";
 import { client } from "@/src/lib/hono-client";
 import { options } from "@/src/utils/options";
+import PaymentDialog from "./dialog-payment";
+import { useRouter } from "next/navigation";
 
 export const FormCheckoutContext = createContext(
   {} as {
@@ -35,7 +37,10 @@ export default function FormCheckout({
   amount: number;
 }) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const { data } = authClient.useSession();
+  const [result, setResult] = useState<any>(null);
 
   const [cardNumber, setCardNumber] = useState("");
   const [exp, setExp] = useState("");
@@ -97,6 +102,20 @@ export default function FormCheckout({
         options
       );
       const results = await res.json();
+
+      if (["shopeepay", "gopay"].includes(results?.data?.payment_type)) {
+        const actions = (results?.data as any)?.actions;
+        const deeplink = Array.isArray(actions)
+          ? actions.find((item: any) => item.name === "deeplink-redirect")
+          : null;
+
+        if (deeplink?.url) {
+          return router.push(deeplink.url);
+        }
+      }
+
+      setResult(results.data);
+      setOpen(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -119,6 +138,13 @@ export default function FormCheckout({
       <form onSubmit={hanldePayment} className="w-full max-w-2xl space-y-6">
         {children}
       </form>
+
+      <PaymentDialog
+        result={result}
+        loading={loading}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
     </FormCheckoutContext.Provider>
   );
 }

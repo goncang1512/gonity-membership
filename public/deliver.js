@@ -33,10 +33,13 @@
           getCardToken: (cardData, options) => {
             return window.MidtransNew3ds.getCardToken(cardData, options);
           },
+          authenticate: (redirect_url, options) => {
+            return window.MidtransNew3ds.authenticate(redirect_url, options);
+          },
         };
       };
     }
   } catch (error) {
-    console.log("ERROR", error);
+    console.error("ERROR", error);
   }
 })();

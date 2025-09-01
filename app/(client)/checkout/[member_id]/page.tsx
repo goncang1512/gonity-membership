@@ -8,6 +8,9 @@ import PaymentMethod from "@/src/components/layouts/checkout/payment-method";
 import FormCheckout, {
   FormCheckoutButton,
 } from "@/src/components/layouts/checkout/form-checkout";
+import { redirect } from "next/navigation";
+import { auth } from "@/src/lib/auth";
+import { headers } from "next/headers";
 
 export default async function CheckoutPage({
   params: valueParams,
@@ -18,6 +21,18 @@ export default async function CheckoutPage({
 
   const res = await getDetailTier(params.member_id);
   const tier = res.data;
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (tier?.name === "Free") {
+    if (session) {
+      return redirect("/");
+    } else {
+      return redirect("/login");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center px-4 py-10">
