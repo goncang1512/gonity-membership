@@ -165,6 +165,13 @@ export default function PaymentDialog({
                   {result?.payment_type === "credit_card" && (
                     <CardPayment url={result?.redirect_url} />
                   )}
+                  {result?.payment_type === "echannel" && (
+                    <EchannelNumber
+                      handleCopy={handleCopy}
+                      bill_key={result?.va_numbers[0].bill_key}
+                      biller_code={result?.va_numbers[0].biller_code}
+                    />
+                  )}
                 </>
               )}
             </div>
@@ -240,6 +247,81 @@ const BankNumber = ({
         >
           {onCopy ? <Check size={14} /> : <Copy size={14} />}
         </Button>
+      </div>
+    </div>
+  );
+};
+
+const EchannelNumber = ({
+  bill_key,
+  biller_code,
+  handleCopy,
+}: {
+  bill_key: string;
+  biller_code: string;
+  handleCopy: (text: string) => void;
+}) => {
+  const [keyCopy, setKeyCopy] = useState(false);
+  const [codeCopy, setCodeCopy] = useState(false);
+  return (
+    <div className="flex flex-col items-center justify-between gap-2">
+      <div className="flex items-center gap-2 self-start">
+        <CreditCard size={16} />
+        <span className="text-sm font-medium">VA Number</span>
+      </div>
+
+      <div className="flex  gap-3">
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex items-center gap-2">
+            <h1>Biller Code</h1>
+            <Button
+              className="cursor-pointer"
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setCodeCopy(true);
+                handleCopy(biller_code);
+                setTimeout(() => {
+                  setCodeCopy(false);
+                }, 3000);
+              }}
+            >
+              {codeCopy ? <Check size={14} /> : <Copy size={14} />}
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <code className="font-mono bg-muted px-2 py-1 rounded text-xl">
+              {biller_code}
+            </code>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex items-center gap-2">
+            <h1>Bill Key</h1>
+
+            <Button
+              className="cursor-pointer"
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setKeyCopy(true);
+                handleCopy(bill_key);
+                setTimeout(() => {
+                  setKeyCopy(false);
+                }, 3000);
+              }}
+            >
+              {keyCopy ? <Check size={14} /> : <Copy size={14} />}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <code className="font-mono bg-muted px-2 py-1 rounded text-xl">
+              {bill_key}
+            </code>
+          </div>
+        </div>
       </div>
     </div>
   );

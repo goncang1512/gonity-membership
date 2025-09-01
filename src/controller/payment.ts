@@ -81,7 +81,7 @@ class PaymentController {
       va_numbers.push({
         bank: "mandiri",
         bill_key: payment.bill_key,
-        biller_code: payment.bill_key,
+        biller_code: payment.biller_code,
       });
     }
 

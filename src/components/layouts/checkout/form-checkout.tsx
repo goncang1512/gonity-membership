@@ -103,6 +103,8 @@ export default function FormCheckout({
       );
       const results = await res.json();
 
+      console.log(results);
+
       if (["shopeepay", "gopay"].includes(results?.data?.payment_type)) {
         const actions = (results?.data as any)?.actions;
         const deeplink = Array.isArray(actions)
