@@ -74,7 +74,7 @@ export const getApiKey = async () => {
       headers: await headers(),
     });
 
-    return await prisma.apikey.findFirst({
+    const apiKey = await prisma.apikey.findFirst({
       where: {
         userId: String(session?.user.id),
       },
@@ -82,6 +82,13 @@ export const getApiKey = async () => {
         key: true,
       },
     });
+
+    return {
+      status: true,
+      statusCode: 200,
+      message: "Success get api key",
+      data: apiKey?.key,
+    };
   } catch (error) {
     return {
       status: false,

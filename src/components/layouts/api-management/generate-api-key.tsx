@@ -4,5 +4,5 @@ import { getApiKey } from "@/src/actions/api-key.action";
 export async function GenerateCode() {
   const apiKey = await getApiKey();
 
-  return <FormGenerate apiKey={apiKey?.key} />;
+  return <FormGenerate apiKey={apiKey.data ?? ""} />;
 }
