@@ -32,7 +32,10 @@ export class GonityFy {
     this.environment = environment;
 
     this.client = axios.create({
-      baseURL: "http://localhost:3000",
+      baseURL:
+        this.environment === "production"
+          ? "https://gonity-membership.vercel.app"
+          : "http://localhost:3000",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
