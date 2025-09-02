@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Check } from "lucide-react";
-import { getDetailTier } from "@/src/actions/my-tier";
 
 export default async function SubscriptionSummary({
   tier,

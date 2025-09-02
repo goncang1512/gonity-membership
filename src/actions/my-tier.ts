@@ -1,15 +1,8 @@
-import { client } from "../lib/hono-client";
-import { options } from "../utils/options";
+import gonityFy from "../lib/gonityfy";
 
 export const getMyTierMembership = async () => {
   try {
-    const res = await client.api.v1.membership.$get({}, options);
-
-    if (!res.ok) {
-      throw new Error("Invalid get membership list");
-    }
-
-    const data = await res.json();
+    const data = await gonityFy.getMyMembership();
 
     return {
       status: true,
@@ -29,20 +22,7 @@ export const getMyTierMembership = async () => {
 
 export const getDetailTier = async (tier_id: string) => {
   try {
-    const res = await client.api.v1.membership[":tier_id"].$get(
-      {
-        param: {
-          tier_id,
-        },
-      },
-      options
-    );
-
-    if (!res.ok) {
-      throw new Error("Invalid get membership tier list");
-    }
-
-    const data = await res.json();
+    const data = await gonityFy.getDetailMemberhip({ membership_id: tier_id });
 
     return data;
   } catch (error) {

@@ -18,12 +18,7 @@ export const allowOrigins = async (c: Context, next: Next) => {
   return cors({
     origin: allowed,
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Accept",
-      "multipart/form-data",
-    ],
+    allowHeaders: ["Content-Type", "Authorization", "Accept"],
     credentials: true,
   })(c, next);
 };

@@ -5,10 +5,9 @@ import { auth } from "../lib/auth";
 import prisma from "../lib/prisma-client";
 import { revalidatePath } from "next/cache";
 import { generateId } from "better-auth";
-import { client } from "../lib/hono-client";
-import { options } from "../utils/options";
 import { Enterprise, Pro } from "../utils/permission";
 import AppError from "../utils/app-error";
+import gonityFy from "../lib/gonityfy";
 
 export const generateApiKey = async () => {
   try {
@@ -16,19 +15,10 @@ export const generateApiKey = async () => {
       headers: await headers(),
     });
 
-    const res = await client.api.v1.subscribe.check[":user_id"].$post(
-      {
-        param: {
-          user_id: String(session?.user.id),
-        },
-        json: {
-          permission: [...Enterprise, ...Pro],
-        },
-      },
-      options
-    );
-
-    const result = await res.json();
+    const result = await gonityFy.checkMembership({
+      user_id: String(session?.user.id),
+      permission: [...Enterprise, ...Pro],
+    });
 
     let expiresIn: number | null = 60 * 60 * 24 * 7;
 
@@ -108,19 +98,10 @@ export const createAuthroizeURIs = async (
       headers: await headers(),
     });
 
-    const res = await client.api.v1.subscribe.check[":user_id"].$post(
-      {
-        param: {
-          user_id: String(session?.user.id),
-        },
-        json: {
-          permission: Enterprise,
-        },
-      },
-      options
-    );
-
-    const result = await res.json();
+    const result = await gonityFy.checkMembership({
+      user_id: String(session?.user.id),
+      permission: Enterprise,
+    });
 
     if (!result.data) {
       const getUris = await prisma.authorizeUri.count({

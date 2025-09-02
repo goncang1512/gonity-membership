@@ -1,10 +1,8 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { RadioGroupItem } from "../../ui/radio-group";
 import { Label } from "../../ui/label";
 import { Landmark, QrCode, Store, Wallet } from "lucide-react";
-import { client } from "@/src/lib/hono-client";
-import { options } from "@/src/utils/options";
 import {
   Accordion,
   AccordionContent,
@@ -13,28 +11,28 @@ import {
 } from "../../ui/accordion";
 import CreditPayment from "./credit-payment";
 import { AccordionCard, RadioGroupProvider } from "./radio-group-context";
+import gonityFy from "@/src/lib/gonityfy";
 
 export default async function PaymentMethod() {
-  const res = await client.api.v1.payments.via.$get({}, options);
-  const result = await res.json();
+  const result = await gonityFy.getPaymentMethod();
 
   const paymentsMethod = [
     {
       id: "bank_transfer",
       name: "Bank Transfer",
-      method: result.data?.bankTransfer ?? [],
+      method: result?.data?.bankTransfer ?? [],
       icon: Landmark,
     },
     {
       id: "cstore",
       name: "Over the Counter",
-      method: result.data?.cstore ?? [],
+      method: result?.data?.cstore ?? [],
       icon: Store,
     },
     {
       id: "ewallet",
       name: "E-Wallet",
-      method: result.data?.ewallet ?? [],
+      method: result?.data?.ewallet ?? [],
       icon: Wallet,
     },
   ];
@@ -63,32 +61,34 @@ export default async function PaymentMethod() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="grid md:grid-cols-2 grid-cols-1">
-                    {has.method.map((item) => {
-                      return (
-                        <Label
-                          key={item.id}
-                          htmlFor={item.id}
-                          className="flex items-center justify-between px-4 py-3 cursor-pointer transition"
-                        >
-                          <div className="flex items-center gap-3">
-                            <input
-                              name={`method-${item.id}`}
-                              defaultValue={has.id}
-                              hidden
-                              readOnly
-                              required
-                            />
-                            <RadioGroupItem value={item.id} id={item.id} />
-                            <img
-                              className="w-12"
-                              src={String(item.image)}
-                              alt={item.name}
-                            />
-                            <span>{item.name}</span>
-                          </div>
-                        </Label>
-                      );
-                    })}
+                    {has.method.map(
+                      (item: { id: string; image: string; name: string }) => {
+                        return (
+                          <Label
+                            key={item.id}
+                            htmlFor={item.id}
+                            className="flex items-center justify-between px-4 py-3 cursor-pointer transition"
+                          >
+                            <div className="flex items-center gap-3">
+                              <input
+                                name={`method-${item.id}`}
+                                defaultValue={has.id}
+                                hidden
+                                readOnly
+                                required
+                              />
+                              <RadioGroupItem value={item.id} id={item.id} />
+                              <img
+                                className="w-12"
+                                src={String(item.image)}
+                                alt={item.name}
+                              />
+                              <span>{item.name}</span>
+                            </div>
+                          </Label>
+                        );
+                      }
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               );

@@ -58,7 +58,7 @@ export const verifyApi = async (c: Context, next: Next) => {
 
     const isAllowed = allowedOrigin.some((item) => item.url === origin);
 
-    if (!isAllowed) {
+    if (origin && !isAllowed) {
       return c.json({ error: "URIs not allowed." }, { status: 403 });
     }
 
