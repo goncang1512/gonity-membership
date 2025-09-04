@@ -20,7 +20,7 @@ export default async function MembersPage({
         fallback={
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, index) => (
-              <Skeleton className="w-full h-44" />
+              <Skeleton key={index} className="w-full h-44" />
             ))}
           </div>
         }

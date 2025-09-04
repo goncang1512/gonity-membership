@@ -28,7 +28,7 @@ export default function HomePage() {
         </section>
 
         {/* Features */}
-        <section className="py-20 container mx-auto px-6">
+        <section id="features" className="py-20 container mx-auto px-6">
           <h2 className="text-2xl font-bold text-center mb-12">
             Features Built for Your Success
           </h2>
@@ -64,7 +64,7 @@ export default function HomePage() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-20 bg-gray-50">
+        <section id="testimonials" className="py-20 bg-gray-50">
           <div className="container mx-auto px-6">
             <h2 className="text-2xl font-bold text-center mb-12">
               What Our Customers Say
@@ -97,7 +97,7 @@ export default function HomePage() {
         </section>
 
         {/* Pricing */}
-        <section className="py-20 container mx-auto px-6">
+        <section id="pricing" className="py-20 container mx-auto px-6">
           <h2 className="text-2xl font-bold text-center mb-12">
             Simple, Transparent Pricing
           </h2>

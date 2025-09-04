@@ -7,7 +7,7 @@ import {
 
 export type GonityFyType = {
   apiKey: string;
-  environment: string;
+  environment?: string;
 };
 
 export type GonityFyRes<T> = {
@@ -24,7 +24,7 @@ type CheckMembershipType = {
 
 export class GonityFy {
   apiKey: string;
-  environment: string;
+  environment?: string;
   client: AxiosInstance;
 
   constructor({ apiKey, environment }: GonityFyType) {
@@ -33,7 +33,7 @@ export class GonityFy {
 
     this.client = axios.create({
       baseURL:
-        this.environment === "production"
+        !this.environment || this.environment === "production"
           ? "https://gonity-membership.vercel.app"
           : "http://localhost:3000",
       headers: {
