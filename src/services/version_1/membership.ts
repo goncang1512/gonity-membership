@@ -1,4 +1,6 @@
 import prisma from "@/src/lib/prisma-client";
+import { generateId } from "better-auth";
+import { addDays } from "date-fns";
 import { Hono } from "hono";
 
 type Variables = {
@@ -81,6 +83,62 @@ const memberApp = new Hono<{ Variables: Variables }>()
         message: "Internal Server Error",
         data: null,
       });
+    }
+  })
+  .post("/:transaction_id", async (c) => {
+    try {
+      const transaction_id = c.req.param("transaction_id");
+
+      const transaction = await prisma.transaction.findFirst({
+        where: {
+          id: transaction_id,
+        },
+        select: {
+          memberId: true,
+          customerEmail: true,
+          customerName: true,
+          userId: true,
+          tier: {
+            select: {
+              id: true,
+              duration: true,
+            },
+          },
+        },
+      });
+
+      const subscribe = await prisma.subscribe.create({
+        data: {
+          id: generateId(32),
+          memberId: transaction?.memberId as string,
+          email: transaction?.customerEmail as string,
+          name: transaction?.customerName as string,
+          expiredAt: addDays(new Date(), transaction?.tier.duration as number),
+          status: "active",
+          userId: transaction?.userId as string,
+          membershipId: transaction?.tier.id as string,
+        },
+      });
+
+      return c.json(
+        {
+          status: true,
+          statusCode: 201,
+          message: "Success",
+          data: subscribe,
+        },
+        { status: 201 }
+      );
+    } catch (error) {
+      return c.json(
+        {
+          status: false,
+          statusCode: 500,
+          message: "Internal Server Error",
+          data: null,
+        },
+        { status: 500 }
+      );
     }
   });
 

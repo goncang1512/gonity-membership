@@ -37,8 +37,6 @@ export const sendNotification = async (transaction_id: string) => {
       },
     });
 
-    console.log(subscribe);
-
     return {
       status: true,
       statusCode: 201,

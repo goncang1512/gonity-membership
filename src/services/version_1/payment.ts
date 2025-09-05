@@ -91,31 +91,37 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         results = await paymentCtrl.bankTransfer({
           ...body,
           amount: transaction?.amount,
+          transaction_id: transaction.id,
         } as BankTransferType);
       } else if (body.method === "bank_transfer" && body.via === "mandiri") {
         results = await paymentCtrl.echannelPayment({
           ...body,
           amount: transaction?.amount,
+          transaction_id: transaction.id,
         } as EchannelType);
       } else if (body.method === "cstore") {
         results = await paymentCtrl.cstorePayment({
           ...body,
           amount: transaction?.amount,
+          transaction_id: transaction.id,
         } as CstoreType);
       } else if (body.method === "credit_card") {
         results = await paymentCtrl.creditCardPayment({
           ...body,
           amount: transaction?.amount,
+          transaction_id: transaction.id,
         } as CreditCardPaymentType);
       } else if (body.via === "qris") {
         results = await paymentCtrl.qrisPayment({
           ...body,
           amount: transaction.amount,
+          transaction_id: transaction.id,
         } as EwalletType);
       } else if (body.method === "ewallet") {
         results = await paymentCtrl.ewalletPayment({
           ...body,
           amount: transaction.amount,
+          transaction_id: transaction.id,
         } as EwalletType);
       } else {
         throw new Error("Invalid error");

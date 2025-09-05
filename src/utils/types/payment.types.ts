@@ -3,6 +3,7 @@ export type BankTransferType = {
   amount: number;
   full_name: string;
   email: string;
+  transaction_id: string;
 };
 
 export interface PaymentResponse {
@@ -18,6 +19,7 @@ export interface PaymentResponse {
   transaction_status: string;
   fraud_status: string;
   expiry_time?: string;
+  metadata?: any;
 
   // konsistensi untuk VA
   va_numbers:
@@ -41,12 +43,14 @@ export type CreditCardPaymentType = {
   amount: number;
   full_name: string;
   email: string;
+  transaction_id: string;
 };
 
 export type EchannelType = {
   amount: number;
   full_name: string;
   email: string;
+  transaction_id: string;
 };
 
 export type CstoreType = {
@@ -54,6 +58,7 @@ export type CstoreType = {
   amount: number;
   full_name: string;
   email: string;
+  transaction_id: string;
 };
 
 export type EwalletType = {
@@ -61,4 +66,5 @@ export type EwalletType = {
   amount: number;
   full_name: string;
   email: string;
+  transaction_id: string;
 };

@@ -10,10 +10,9 @@ import { Button } from "../../ui/button";
 import { authClient } from "@/src/lib/auth-client";
 import { Loader2 } from "lucide-react";
 import { getCardTokenAsync } from "@/src/utils/get-token-card";
-import { client } from "@/src/lib/hono-client";
-import { options } from "@/src/utils/options";
 import PaymentDialog from "./dialog-payment";
 import { useRouter } from "next/navigation";
+import gonityFy from "@/src/lib/gonityfy";
 
 export const FormCheckoutContext = createContext(
   {} as {
@@ -95,15 +94,7 @@ export default function FormCheckout({
     };
 
     try {
-      const res = await client.api.v1.payments.charge.$post(
-        {
-          json: payload,
-        },
-        options
-      );
-      const results = await res.json();
-
-      console.log(results);
+      const results = await gonityFy.paymentMembership(payload);
 
       if (["shopeepay", "gopay"].includes(results?.data?.payment_type)) {
         const actions = (results?.data as any)?.actions;

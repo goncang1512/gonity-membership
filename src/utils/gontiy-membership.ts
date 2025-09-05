@@ -35,7 +35,7 @@ export class GonityFy {
       baseURL:
         !this.environment || this.environment === "production"
           ? "https://gonity-membership.vercel.app"
-          : "http://localhost:3000",
+          : "https://9785739aef8d.ngrok-free.app",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -82,7 +82,13 @@ export class GonityFy {
   };
 
   getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes>> => {
-    const result = await this.client.get(`/api/v1/membership`);
+    const result = await this.client.get(`/api/v1/membership`, {
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
 
     return result.data;
   };
@@ -95,6 +101,22 @@ export class GonityFy {
     const result = await this.client.get(`/api/v1/membership/${membership_id}`);
 
     return result.data;
+  };
+
+  paymentMembership = async (payload: {
+    tier_id: string;
+    name: FormDataEntryValue | null;
+    email: FormDataEntryValue | null;
+    phone: FormDataEntryValue | null;
+    via: FormDataEntryValue | null;
+    method: FormDataEntryValue | null;
+    amount: number;
+    token_card: unknown;
+    member_id: string;
+  }) => {
+    const res = await this.client.post(`/api/v1/payments/charge`, payload);
+
+    return res.data;
   };
 }
 

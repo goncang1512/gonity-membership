@@ -25,13 +25,13 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
-  apikeys    Apikey[]
-  permission Permission[]
-  membership Membership[]
+  apikeys      Apikey[]
+  permission   Permission[]
+  membership   Membership[]
+  AuthorizeUri AuthorizeUri[]
 
   @@unique([email])
   @@map("user")
-  AuthorizeUri AuthorizeUri[]
 }
 
 model Session {
@@ -84,7 +84,7 @@ model Apikey {
   name                String?
   start               String?
   prefix              String?
-  key                 String  @unique
+  key                 String    @unique
   userId              String
   user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   refillInterval      Int?
@@ -112,7 +112,7 @@ model Permission {
   description String?
   userId      String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   membership Membership[]
 
   createdAt DateTime @default(now())
@@ -137,10 +137,10 @@ model Membership {
   status      StatusMembership
   userId      String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   permissions Permission[]
   transaction Transaction[]
-  subscribe Subscribe[]
+  subscribe   Subscribe[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -149,11 +149,12 @@ model Membership {
 }
 
 model AuthorizeUri {
-  id  String @id
-  url String
+  id     String @id
+  url    String
   userId String
+  type   String @default("authorize")
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -170,21 +171,21 @@ enum TransactionEnum {
 }
 
 model Transaction {
-  id              String @id
-  userId          String
-  memberId        String
-  customerEmail   String
-  customerName    String
-  tierId          String
-  amount          Int
-  status          TransactionEnum
-  method          String
-  paidAt          DateTime?
+  id            String          @id
+  userId        String
+  memberId      String
+  customerEmail String
+  customerName  String
+  tierId        String
+  amount        Int
+  status        TransactionEnum
+  method        String
+  paidAt        DateTime?
 
-  tier  Membership @relation(fields: [tierId], references: [id], onDelete: Cascade)
+  tier Membership @relation(fields: [tierId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("transaction")
 }
@@ -197,18 +198,18 @@ enum SubscriptionStatus {
 }
 
 model Subscribe {
-  id              String @id
-  userId          String
-  name            String
-  email           String
-  memberId        String
-  membershipId    String
-  membership      Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
-  expiredAt       DateTime
-  status          SubscriptionStatus
+  id           String             @id
+  userId       String
+  name         String
+  email        String
+  memberId     String
+  membershipId String
+  membership   Membership         @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  expiredAt    DateTime
+  status       SubscriptionStatus
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("subscribe")
 }

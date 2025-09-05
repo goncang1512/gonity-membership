@@ -22,6 +22,9 @@ class PaymentController {
         first_name: body.full_name,
         email: body.email,
       },
+      metadata: {
+        transaction_id: body.transaction_id,
+      },
     });
 
     // --- 🔹 Normalisasi supaya konsisten ---
@@ -51,6 +54,7 @@ class PaymentController {
       transaction_status: payment.transaction_status,
       fraud_status: payment.fraud_status,
       expiry_time: payment.expiry_time,
+      metadata: payment.metadata,
       va_numbers,
     };
 
@@ -71,6 +75,9 @@ class PaymentController {
       customer_details: {
         first_name: body.full_name,
         email: body.email,
+      },
+      metadata: {
+        transaction_id: body.transaction_id,
       },
     });
 
@@ -98,6 +105,7 @@ class PaymentController {
       transaction_status: payment.transaction_status,
       fraud_status: payment.fraud_status,
       expiry_time: payment.expiry_time,
+      metadata: payment.metadata,
       va_numbers,
     };
 
@@ -121,6 +129,9 @@ class PaymentController {
         alfamart_free_text_1: "1st row of receipt,",
         alfamart_free_text_2: "This is the 2nd row,",
         alfamart_free_text_3: "3rd row. The end.",
+      },
+      metadata: {
+        transaction_id: body.transaction_id,
       },
     });
 
@@ -146,6 +157,7 @@ class PaymentController {
       transaction_status: payment.transaction_status,
       fraud_status: payment.fraud_status,
       expiry_time: payment.expiry_time,
+      metadata: payment.metadata,
       va_numbers,
     };
 
@@ -167,6 +179,9 @@ class PaymentController {
         first_name: body.full_name,
         email: body.email,
       },
+      metadata: {
+        transaction_id: body.transaction_id,
+      },
     });
 
     return payment;
@@ -182,6 +197,9 @@ class PaymentController {
       customer_details: {
         first_name: body.full_name,
         email: body.email,
+      },
+      metadata: {
+        transaction_id: body.transaction_id,
       },
     });
 
@@ -201,6 +219,9 @@ class PaymentController {
       },
       qris: {
         acquirer: "gopay",
+      },
+      metadata: {
+        transaction_id: body.transaction_id,
       },
     });
 

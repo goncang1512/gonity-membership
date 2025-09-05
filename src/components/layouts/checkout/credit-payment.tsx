@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
-import { CreditCard, Calendar, Shield, Check } from "lucide-react";
+import { CreditCard, Calendar, Shield } from "lucide-react";
 import { FormCheckoutContext } from "./form-checkout";
 
 export default function CreditPayment() {

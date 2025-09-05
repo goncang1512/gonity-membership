@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/src/components/ui/card";
 import { Separator } from "@/src/components/ui/separator";
 import { Copy, CreditCard, Clock, Check, Store, QrCode } from "lucide-react";
 import { Skeleton } from "../../ui/skeleton";
+import axios from "axios";
 
 type PaymentDialogProps = {
   open: boolean;
@@ -376,9 +377,7 @@ const QrisImage = ({ qr_string }: { qr_string: string }) => {
 const CardPayment = ({ url }: { url: string }) => {
   // callback functions
   var options = {
-    onSuccess: function (response: any) {
-      window.location.replace("http://midtrans.com?status=success");
-    },
+    onSuccess: async function (response: any) {},
     onFailure: function (response: any) {
       // 3ds authentication failure, implement payment failure scenario
     },

@@ -10,7 +10,7 @@ import {
   deleteAuthorizeURI,
 } from "@/src/actions/api-key.action";
 
-export default function ListUri({
+export default function ListUriNotification({
   data,
 }: {
   data: { id: string; url: string }[];
@@ -34,7 +34,7 @@ export default function ListUri({
 
     startTransition(async () => {
       const res = await createAuthroizeURIs(
-        inputState.map((item) => ({ ...item, type: "authorize" }))
+        inputState.map((item) => ({ ...item, type: "notification" }))
       );
 
       if (!res.status && res.statusCode === 422) {

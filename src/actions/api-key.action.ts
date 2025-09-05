@@ -91,7 +91,7 @@ export const getApiKey = async () => {
 };
 
 export const createAuthroizeURIs = async (
-  body: { id: string; url: string }[]
+  body: { id: string; url: string; type: string }[]
 ) => {
   try {
     const session = await auth.api.getSession({
@@ -125,6 +125,7 @@ export const createAuthroizeURIs = async (
           id: generateId(32),
           url: String(item.url),
           userId: String(session?.user.id),
+          type: String(item.type),
         },
       });
     }
@@ -173,6 +174,21 @@ export const getAuthorizeURIs = async () => {
     const results = await prisma.authorizeUri.findMany({
       where: {
         userId: String(session?.user.id),
+        type: "authorize",
+      },
+      select: {
+        id: true,
+        url: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const notificationUri = await prisma.authorizeUri.findMany({
+      where: {
+        userId: String(session?.user.id),
+        type: "notification",
       },
       select: {
         id: true,
@@ -187,7 +203,7 @@ export const getAuthorizeURIs = async () => {
       status: true,
       statusCode: 200,
       message: "Success",
-      data: results,
+      data: { authorize: results, notificationUri },
     };
   } catch (error) {
     return {
