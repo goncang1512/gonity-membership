@@ -171,33 +171,24 @@ export const getAuthorizeURIs = async () => {
       headers: await headers(),
     });
 
-    const results = await prisma.authorizeUri.findMany({
-      where: {
-        userId: String(session?.user.id),
-        type: "authorize",
-      },
-      select: {
-        id: true,
-        url: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-
-    const notificationUri = await prisma.authorizeUri.findMany({
-      where: {
-        userId: String(session?.user.id),
-        type: "notification",
-      },
-      select: {
-        id: true,
-        url: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
+    const [results, notificationUri] = await Promise.all([
+      prisma.authorizeUri.findMany({
+        where: {
+          userId: String(session?.user.id),
+          type: "authorize",
+        },
+        select: { id: true, url: true },
+        orderBy: { createdAt: "asc" },
+      }),
+      prisma.authorizeUri.findMany({
+        where: {
+          userId: String(session?.user.id),
+          type: "notification",
+        },
+        select: { id: true, url: true },
+        orderBy: { createdAt: "asc" },
+      }),
+    ]);
 
     return {
       status: true,

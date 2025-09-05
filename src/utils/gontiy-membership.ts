@@ -33,7 +33,7 @@ export class GonityFy {
 
     this.client = axios.create({
       baseURL:
-        !this.environment || this.environment === "production"
+        this.environment === "production"
           ? "https://gonitify.vercel.app"
           : "http://localhost:3000",
       headers: {
@@ -82,13 +82,7 @@ export class GonityFy {
   };
 
   getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes>> => {
-    const result = await this.client.get(`/api/v1/membership`, {
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
-    });
+    const result = await this.client.get(`/api/v1/membership`);
 
     return result.data;
   };
