@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-const cardClientApp = new Hono().post("/", async (c) => {
+const cardClientApp = new Hono().get("/", async (c) => {
   try {
     const environment = c.req.query("environment");
 

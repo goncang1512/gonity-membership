@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/src/lib/auth";
 import { headers } from "next/headers";
 import gonityFy from "@/src/lib/gonityfy";
+import { CheckoutScript } from "@/src/components/layouts/checkout/checkout-script";
 
 export default async function CheckoutPage({
   params: valueParams,
@@ -38,36 +39,39 @@ export default async function CheckoutPage({
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-8 text-gray-800">
-        Complete Your Subscription
-      </h1>
+    <>
+      <CheckoutScript />
+      <div className="min-h-screen bg-white flex flex-col items-center px-4 py-10">
+        <h1 className="text-2xl font-semibold mb-8 text-gray-800">
+          Complete Your Subscription
+        </h1>
 
-      <FormCheckout tier_id={params.member_id} amount={tier?.price ?? 0}>
-        {/* Subscription Summary */}
-        <Suspense fallback={<Skeleton className="w-full h-56" />}>
-          <SubscriptionSummary tier={tier} />
-        </Suspense>
+        <FormCheckout tier_id={params.member_id} amount={tier?.price ?? 0}>
+          {/* Subscription Summary */}
+          <Suspense fallback={<Skeleton className="w-full h-56" />}>
+            <SubscriptionSummary tier={tier} />
+          </Suspense>
 
-        {/* User Details */}
-        <DetailsUser />
+          {/* User Details */}
+          <DetailsUser />
 
-        {/* Payment Method */}
-        <PaymentMethod />
+          {/* Payment Method */}
+          <PaymentMethod />
 
-        {/* Total + CTA */}
-        <Card className="border-blue-100">
-          <CardContent className="flex items-center justify-between py-6">
-            <div>
-              <p className="text-gray-500 text-sm">Total to Pay</p>
-              <p className="text-2xl font-bold text-blue-700">
-                Rp{tier?.price.toLocaleString("id-ID")}
-              </p>
-            </div>
-            <FormCheckoutButton />
-          </CardContent>
-        </Card>
-      </FormCheckout>
-    </div>
+          {/* Total + CTA */}
+          <Card className="border-blue-100">
+            <CardContent className="flex items-center justify-between py-6">
+              <div>
+                <p className="text-gray-500 text-sm">Total to Pay</p>
+                <p className="text-2xl font-bold text-blue-700">
+                  Rp{tier?.price.toLocaleString("id-ID")}
+                </p>
+              </div>
+              <FormCheckoutButton />
+            </CardContent>
+          </Card>
+        </FormCheckout>
+      </div>
+    </>
   );
 }

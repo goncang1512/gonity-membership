@@ -9,7 +9,7 @@
   let res;
   try {
     res = await fetch(`${urlApi}/api/v1/script?environment=${environment}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
