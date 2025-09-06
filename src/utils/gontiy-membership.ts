@@ -82,7 +82,14 @@ export class GonityFy {
   };
 
   getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes>> => {
-    const result = await this.client.get(`/api/v1/membership`);
+    const result = await this.client.get(`/api/v1/membership`, {
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
 
     return result.data;
   };
