@@ -4,10 +4,10 @@ import { buttonVariants } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
-import { getMyTierMembership } from "@/src/actions/my-tier";
+import gonityFy from "@/src/lib/gonityfy";
 
 export default async function PricingSubscribe() {
-  const data = await getMyTierMembership();
+  const data = await gonityFy.getMyMembership();
 
   return (
     <div className="grid md:grid-cols-3 gap-6">

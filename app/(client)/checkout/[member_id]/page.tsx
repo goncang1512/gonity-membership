@@ -2,7 +2,6 @@ import { Card, CardContent } from "@/src/components/ui/card";
 import SubscriptionSummary from "@/src/components/layouts/checkout/subscription-summary";
 import { Suspense } from "react";
 import { Skeleton } from "@/src/components/ui/skeleton";
-import { getDetailTier } from "@/src/actions/my-tier";
 import DetailsUser from "@/src/components/layouts/checkout/details-user";
 import PaymentMethod from "@/src/components/layouts/checkout/payment-method";
 import FormCheckout, {
@@ -11,6 +10,7 @@ import FormCheckout, {
 import { redirect } from "next/navigation";
 import { auth } from "@/src/lib/auth";
 import { headers } from "next/headers";
+import gonityFy from "@/src/lib/gonityfy";
 
 export default async function CheckoutPage({
   params: valueParams,
@@ -19,7 +19,10 @@ export default async function CheckoutPage({
 }) {
   const params = await valueParams;
 
-  const res = await getDetailTier(params.member_id);
+  const res = await gonityFy.getDetailMemberhip({
+    membership_id: params.member_id,
+  });
+
   const tier = res.data;
 
   const session = await auth.api.getSession({
