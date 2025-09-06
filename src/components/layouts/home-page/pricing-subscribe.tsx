@@ -4,14 +4,23 @@ import { buttonVariants } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
-import gonityFy from "@/src/lib/gonityfy";
+import axios from "axios";
 
 export default async function PricingSubscribe() {
-  const data = await gonityFy.getMyMembership();
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/api/v1/membership`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_MEMBERSHIP_KEY}`,
+      },
+    }
+  );
+
+  const data = res.data;
 
   return (
     <div className="grid md:grid-cols-3 gap-6">
-      {(data.data ?? []).map((item) => {
+      {(data.data ?? []).map((item: any) => {
         const buttonText =
           item.name === "Enterprise"
             ? "Contact Sales"
@@ -32,7 +41,7 @@ export default async function PricingSubscribe() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-sm">
-                {item.permissions.map((permission) => (
+                {item.permissions.map((permission: any) => (
                   <li key={permission.id}>✔ {permission.name}</li>
                 ))}
               </ul>
