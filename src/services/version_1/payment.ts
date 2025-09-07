@@ -154,47 +154,47 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "bca",
           name: "BCA",
-          image: "/methods/bca_va.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/bca_va.png`,
         },
         {
           id: "bni",
           name: "BNI",
-          image: "/methods/bni_va.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/bni_va.png`,
         },
         {
           id: "bri",
           name: "BRI",
-          image: "/methods/bri_va.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/bri_va.png`,
         },
         {
           id: "bsi",
           name: "BSI",
-          image: "/methods/bsi_va.svg",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/bsi_va.svg`,
         },
         {
           id: "mandiri",
           name: "Mandiri",
-          image: "/methods/mandiri_bill.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/mandiri_bill.png`,
         },
         {
           id: "permata",
           name: "Permata",
-          image: "/methods/permata_va.svg",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/permata_va.svg`,
         },
         {
           id: "cimb",
           name: "CIMB NIAGA",
-          image: "/methods/cimb_va.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/cimb_va.png`,
         },
         {
           id: "danamon",
           name: "Danamon",
-          image: "/methods/danamon_va.svg",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/danamon_va.svg`,
         },
         {
           id: "seabank",
           name: "SeaBank",
-          image: "/methods/seabank_va.svg",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/seabank_va.svg`,
         },
       ];
 
@@ -202,12 +202,12 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "alfamart",
           name: "Alfamart",
-          image: "/methods/alfamart.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/alfamart.png`,
         },
         {
           id: "indomaret",
           name: "Indomaret",
-          image: "/methods/indomaret.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/indomaret.png`,
         },
       ];
 
@@ -215,12 +215,12 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "gopay",
           name: "GoPay",
-          image: "/methods/gopay.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/gopay.png`,
         },
         {
           id: "shopeepay",
           name: "ShopeePay",
-          image: "/methods/shopeepay.png",
+          image: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/methods/shopeepay.png`,
         },
       ];
 
