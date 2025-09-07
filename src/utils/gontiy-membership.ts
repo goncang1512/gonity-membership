@@ -81,7 +81,7 @@ export class GonityFy {
     return result.data;
   };
 
-  getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes>> => {
+  getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes[]>> => {
     const result = await this.client.get(`/api/v1/membership`);
 
     return result.data;

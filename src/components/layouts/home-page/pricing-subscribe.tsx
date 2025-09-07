@@ -1,25 +1,49 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { buttonVariants } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
 import gonityFy from "@/src/lib/gonityfy";
+import { MyMembershipRes } from "@/src/utils/types/type-gonityfy";
+import { Skeleton } from "../../ui/skeleton";
 
-export default async function PricingSubscribe() {
-  const data = await gonityFy.getMyMembership();
+export default function PricingSubscribe() {
+  const [data, setData] = useState<MyMembershipRes[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  if (!data) {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        const res = await gonityFy.getMyMembership();
+
+        setData(res.data ?? []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
     return (
-      <div className="flex justify-center">
-        <p>NOT FOUND</p>
+      <div className="grid grid-cols-3 gap-3">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <Skeleton key={index} className="w-full h-56" />
+        ))}
       </div>
     );
   }
 
   return (
     <div className="grid md:grid-cols-3 gap-6">
-      {(data.data ?? []).map((item: any) => {
+      {(data ?? []).map((item: any) => {
         const buttonText =
           item.name === "Enterprise"
             ? "Contact Sales"

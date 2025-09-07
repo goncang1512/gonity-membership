@@ -6,8 +6,6 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import PricingSubscribe from "@/src/components/layouts/home-page/pricing-subscribe";
-import { Suspense } from "react";
-import { Skeleton } from "@/src/components/ui/skeleton";
 import { Navbar } from "@/src/components/layouts/navbar";
 
 export default function HomeClient() {
@@ -104,17 +102,8 @@ export default function HomeClient() {
           <h2 className="text-2xl font-bold text-center mb-12">
             Simple, Transparent Pricing
           </h2>
-          <Suspense
-            fallback={
-              <div className="grid grid-cols-3 gap-3">
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <Skeleton key={index} className="w-full h-56" />
-                ))}
-              </div>
-            }
-          >
-            <PricingSubscribe />
-          </Suspense>
+
+          <PricingSubscribe />
         </section>
 
         {/* Footer */}
