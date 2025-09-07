@@ -4,19 +4,18 @@ import { buttonVariants } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
-import axios from "axios";
+import gonityFy from "@/src/lib/gonityfy";
 
 export default async function PricingSubscribe() {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/api/v1/membership`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_MEMBERSHIP_KEY}`,
-      },
-    }
-  );
+  const data = await gonityFy.getMyMembership();
 
-  const data = res.data;
+  if (!data) {
+    return (
+      <div className="flex justify-center">
+        <p>NOT FOUND</p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid md:grid-cols-3 gap-6">

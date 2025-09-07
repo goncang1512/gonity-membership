@@ -8,10 +8,13 @@ import {
 import PricingSubscribe from "@/src/components/layouts/home-page/pricing-subscribe";
 import { Suspense } from "react";
 import { Skeleton } from "@/src/components/ui/skeleton";
+import { Navbar } from "@/src/components/layouts/navbar";
 
-export default function HomePage() {
+export default function HomeClient() {
   return (
     <>
+      <Navbar />
+
       <div className="flex flex-col">
         {/* Hero Section */}
         <section className="bg-blue-50 py-20">

@@ -11,12 +11,12 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo.svg" // Ganti dengan path logo kamu
+            src="/logo.png" // Ganti dengan path logo kamu
             alt="Logo"
-            width={30}
-            height={30}
+            width={50}
+            height={50}
           />
-          <span className="font-bold text-lg text-blue-600">logo</span>
+          <span className="font-bold text-lg text-blue-600">GonitiFy</span>
         </Link>
 
         {/* Navigation */}

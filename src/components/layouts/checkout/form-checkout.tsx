@@ -75,11 +75,11 @@ export default function FormCheckout({
     const formData = new FormData(e.currentTarget);
     const cardData = await onSubmit(formData);
 
-    const via = formData.get("payment_method");
-    const method = formData.get(`method-${via}`);
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const phone = formData.get("phone");
+    const via = formData.get("payment_method") as string;
+    const method = formData.get(`method-${via}`) as string;
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const phone = formData.get("phone") as string;
 
     const payload = {
       tier_id,

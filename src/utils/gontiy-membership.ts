@@ -82,14 +82,7 @@ export class GonityFy {
   };
 
   getMyMembership = async (): Promise<GonityFyRes<MyMembershipRes>> => {
-    const result = await this.client.get(`/api/v1/membership`, {
-      headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
-    });
+    const result = await this.client.get(`/api/v1/membership`);
 
     return result.data;
   };
@@ -106,11 +99,11 @@ export class GonityFy {
 
   paymentMembership = async (payload: {
     tier_id: string;
-    name: FormDataEntryValue | null;
-    email: FormDataEntryValue | null;
-    phone: FormDataEntryValue | null;
-    via: FormDataEntryValue | null;
-    method: FormDataEntryValue | null;
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+    via: string | null;
+    method: string | null;
     amount: number;
     token_card: unknown;
     member_id: string;

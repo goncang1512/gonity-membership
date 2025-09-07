@@ -154,44 +154,47 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "bca",
           name: "BCA",
-          image:
-            "https://i.pinimg.com/736x/00/cb/4f/00cb4f7ad2d81f39afffe610fc1d07fd.jpg",
+          image: "/methods/bca_va.png",
         },
         {
           id: "bni",
           name: "BNI",
-          image:
-            "https://i.pinimg.com/736x/47/3c/64/473c64ed9af3edc9631979ec39e58934.jpg",
+          image: "/methods/bni_va.png",
         },
         {
           id: "bri",
           name: "BRI",
-          image:
-            "https://i.pinimg.com/736x/f8/89/3c/f8893c524e737a00d7aabc02a1737ce9.jpg",
+          image: "/methods/bri_va.png",
         },
         {
           id: "bsi",
           name: "BSI",
-          image:
-            "https://i.pinimg.com/1200x/57/6b/12/576b12390f3f70f03474268552d12103.jpg",
+          image: "/methods/bsi_va.svg",
         },
         {
           id: "mandiri",
           name: "Mandiri",
-          image:
-            "https://i.pinimg.com/736x/1b/1e/ae/1b1eae66e95098ca6c3b34a2080e0c5e.jpg",
+          image: "/methods/mandiri_bill.png",
         },
         {
           id: "permata",
           name: "Permata",
-          image:
-            "https://i.pinimg.com/1200x/76/73/d2/7673d2bfe339774be8f679443feca1b3.jpg",
+          image: "/methods/permata_va.svg",
         },
         {
           id: "cimb",
           name: "CIMB NIAGA",
-          image:
-            "https://i.pinimg.com/736x/04/4b/63/044b63ce7c415fef4346852325d6c557.jpg",
+          image: "/methods/cimb_va.png",
+        },
+        {
+          id: "danamon",
+          name: "Danamon",
+          image: "/methods/danamon_va.svg",
+        },
+        {
+          id: "seabank",
+          name: "SeaBank",
+          image: "/methods/seabank_va.svg",
         },
       ];
 
@@ -199,14 +202,12 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "alfamart",
           name: "Alfamart",
-          image:
-            "https://i.pinimg.com/1200x/45/69/6d/45696d9f00a53c9a58818a0def16baad.jpg",
+          image: "/methods/alfamart.png",
         },
         {
           id: "indomaret",
           name: "Indomaret",
-          image:
-            "https://i.pinimg.com/736x/29/a0/73/29a073b7a1815ef0f6b9a38f480baf9c.jpg",
+          image: "/methods/indomaret.png",
         },
       ];
 
@@ -214,14 +215,12 @@ const paymentApp = new Hono<{ Variables: { admin_id: string } }>()
         {
           id: "gopay",
           name: "GoPay",
-          image:
-            "https://i.pinimg.com/1200x/43/2d/a8/432da848f4a8fcaa56c55b6c8ce36807.jpg",
+          image: "/methods/gopay.png",
         },
         {
           id: "shopeepay",
           name: "ShopeePay",
-          image:
-            "https://i.pinimg.com/1200x/a6/cb/e6/a6cbe6a3c5e9b03ef09ebfc0969323d2.jpg",
+          image: "/methods/shopeepay.png",
         },
       ];
 
