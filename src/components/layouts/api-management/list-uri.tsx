@@ -57,7 +57,10 @@ export default function ListUri({
   return (
     <>
       <p className="pb-5 text-center italic text-red-500">{message}</p>
-      <form onSubmit={handleCrateUri} className="grid grid-cols-2 gap-5">
+      <form
+        onSubmit={handleCrateUri}
+        className="grid md:grid-cols-2 grid-cols-1 gap-5"
+      >
         {inputState.map((item, index) => {
           return (
             <div className="flex items-center gap-2 w-full">
@@ -110,7 +113,8 @@ export default function ListUri({
           <Plus size={20} />
           Add URI
         </Button>
-        <div className="w-full flex justify-center col-span-2">
+
+        <div className="w-full flex justify-center md:col-span-2 col-span-1">
           <Button type="submit" className="w-3xs mt-5 cursor-pointer">
             {isPending && <Loader2 className="animate-spin" />} Save
           </Button>

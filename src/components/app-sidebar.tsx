@@ -1,27 +1,17 @@
 "use client";
 import * as React from "react";
 import {
-  IconCamera,
-  IconChartBar,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
   IconHelp,
   IconInnerShadowTop,
   IconKey,
   IconListDetails,
   IconRepeat,
-  IconReport,
   IconSearch,
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
-
-import { NavDocuments } from "@/src/components/nav-documents";
-import { NavMain } from "@/src/components/nav-main";
+import { NavEllipsi, NavMain } from "@/src/components/nav-main";
 import { NavSecondary } from "@/src/components/nav-secondary";
 import { NavUser } from "@/src/components/nav-user";
 import {
@@ -33,6 +23,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/src/components/ui/sidebar";
+import { Bot, HandCoins } from "lucide-react";
+import Link from "next/link";
 
 const data = {
   user: {
@@ -67,10 +59,30 @@ const data = {
       icon: IconKey,
     },
   ],
+  navDonate: {
+    title: "Donation",
+    url: "#",
+    icon: HandCoins,
+    isActive: true,
+    items: [
+      {
+        title: "Dashboard",
+        url: "/donation",
+      },
+      {
+        title: "History",
+        url: "/donation/history",
+      },
+      {
+        title: "Overlay",
+        url: "/donation/overlay",
+      },
+    ],
+  },
   navSecondary: [
     {
       title: "Settings",
-      url: "/dashboard/setting",
+      url: "/setting",
       icon: IconSettings,
     },
     {
@@ -96,16 +108,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <Link href="/">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
+        <NavEllipsi items={[data.navDonate]} />
+
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
