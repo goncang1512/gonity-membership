@@ -6,7 +6,13 @@ import {
 } from "@/src/components/layouts/overlay/alert-overlay";
 import { ably, ablyDonation } from "@/src/lib/ably";
 import { useSearchParams } from "next/navigation";
-import React, { startTransition, useEffect, useRef, useState } from "react";
+import React, {
+  startTransition,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type Donation = {
   name: string;
@@ -114,12 +120,14 @@ export default function OverlayAlertPage() {
   }
 
   return (
-    <div className="p-3 pr-4">
-      {loading ? (
-        <></>
-      ) : current && isVisible ? (
-        <CompAlert config={config ?? null} donor={current} />
-      ) : null}
-    </div>
+    <Suspense fallback={<></>}>
+      <div className="p-3 pr-4">
+        {loading ? (
+          <></>
+        ) : current && isVisible ? (
+          <CompAlert config={config ?? null} donor={current} />
+        ) : null}
+      </div>
+    </Suspense>
   );
 }
