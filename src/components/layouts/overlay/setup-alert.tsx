@@ -39,7 +39,14 @@ export default function SetUpAlert() {
         </p>
 
         <div className="grid grid-cols-3 gap-2">
-          <Button className="bg-blue-400 hover:bg-blue-500 cursor-pointer">
+          <Button
+            onClick={() =>
+              navigator.clipboard.writeText(
+                `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/widgets/alert?streamKey=${config.id}`
+              )
+            }
+            className="bg-blue-400 hover:bg-blue-500 cursor-pointer"
+          >
             Copy
           </Button>
           <Link
