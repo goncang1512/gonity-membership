@@ -14,7 +14,7 @@ type Donation = {
   message: string;
 };
 
-export default function AlertPage() {
+export default function OverlayAlertPage() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState<
