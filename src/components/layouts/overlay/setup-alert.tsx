@@ -33,7 +33,7 @@ export default function SetUpAlert() {
           OBS telah terupdate ke versi terbaru (v28).
         </p>
 
-        <p className="border-b border-black pb-2 pt-3">
+        <p className="border-b border-black pb-2 pt-3 break-all">
           {process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/widgets/alert?streamKey=
           {config.id}
         </p>
@@ -43,7 +43,8 @@ export default function SetUpAlert() {
             Copy
           </Button>
           <Link
-            href={`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/widgets/alert`}
+            href={`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/widgets/alert?streamKey=
+          ${config.id}`}
             target="_blank"
             className={cn(
               buttonVariants({
