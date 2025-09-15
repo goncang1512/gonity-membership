@@ -37,10 +37,10 @@ const data = [
 
 export default function Dashboard() {
   return (
-    <div className="p-6 grid gap-4">
+    <div className="p-5 grid gap-4">
       {/* Top Stats */}
-      <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="md:col-span-1 col-span-2">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">
               Total Donations Today
@@ -93,11 +93,11 @@ export default function Dashboard() {
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Donation Growth</CardTitle>
             <Button variant="ghost" size="sm" className="text-blue-500">
-              View Report <ArrowRight className="ml-2 h-4 w-4" />
+              View Report <ArrowRight className="h-4 w-4" />
             </Button>
           </CardHeader>
-          <CardContent>
-            <div className="h-64">
+          <CardContent className="max-md:px-0 max-md:pr-3">
+            <div className="h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -132,7 +132,7 @@ export default function Dashboard() {
               </Button>
             </CardHeader>
             <CardContent>
-              <Table className="w-full text-sm">
+              <Table className="text-sm">
                 <TableHeader className="text-muted-foreground text-left">
                   <TableRow>
                     <TableHead className="pb-2">Donor</TableHead>
@@ -141,46 +141,18 @@ export default function Dashboard() {
                     <TableHead className="pb-2">Time</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="divide-y">
+                <TableBody>
                   <TableRow>
-                    <TableCell>Sarah Johnson</TableCell>
-                    <TableCell className="text-green-600 font-medium">
-                      $20.00
+                    <TableCell className="breaks-words whitespace-normal">
+                      Sarah Johnson
                     </TableCell>
-                    <TableCell>Keep up the great work!</TableCell>
+                    <TableCell className="text-green-600 font-medium">
+                      Rp20.000
+                    </TableCell>
+                    <TableCell className="breaks-words whitespace-normal">
+                      Keep up the great work!
+                    </TableCell>
                     <TableCell>2 hours ago</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Anonymous</TableCell>
-                    <TableCell className="text-green-600 font-medium">
-                      $10.00
-                    </TableCell>
-                    <TableCell>For a good cause!</TableCell>
-                    <TableCell>5 hours ago</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>David Lee</TableCell>
-                    <TableCell className="text-green-600 font-medium">
-                      $100.00
-                    </TableCell>
-                    <TableCell>Happy to support!</TableCell>
-                    <TableCell>9 hours ago</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Emily Chan</TableCell>
-                    <TableCell className="text-green-600 font-medium">
-                      $50.00
-                    </TableCell>
-                    <TableCell>Small contribution.</TableCell>
-                    <TableCell>12 hours ago</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Mark Davis</TableCell>
-                    <TableCell className="text-green-600 font-medium">
-                      $75.00
-                    </TableCell>
-                    <TableCell>Best wishes!</TableCell>
-                    <TableCell>1 day ago</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

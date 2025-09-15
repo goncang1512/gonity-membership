@@ -32,6 +32,7 @@ model User {
 
   @@unique([email])
   @@map("user")
+  Overlay Overlay[]
 }
 
 model Session {
@@ -212,4 +213,26 @@ model Subscribe {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("subscribe")
+}
+
+model Overlay {
+  id        String   @id
+  userId    String   @unique
+  borderless Boolean @default(true)
+  bgColor     String   @default("#1e293b")
+  highlightColor String @default("#f97316")
+  textColor String @default("#f1f5f9")
+  fontSize  String @default("16px")
+  fontWeight String @default("600")
+  fontFamily String @default("default")
+  templateText String @default("baru saja mendukung kamu dengan")
+  duration Int @default(5000) 
+  shadow String @default("10px 10px 0px rgba(249,115,22,1)")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("overlay")
 }
