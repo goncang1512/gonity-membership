@@ -1,4 +1,5 @@
 "use client";
+
 import { getStreamOverlay } from "@/src/actions/overlay.load";
 import {
   CompAlert,
@@ -20,7 +21,17 @@ type Donation = {
   message: string;
 };
 
+// 🔑 Komponen utama (tidak langsung pakai useSearchParams)
 export default function OverlayAlertPage() {
+  return (
+    <Suspense fallback={<></>}>
+      <OverlayAlertContent />
+    </Suspense>
+  );
+}
+
+// 🔑 Komponen child (pakai useSearchParams di sini)
+function OverlayAlertContent() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState<
@@ -29,30 +40,28 @@ export default function OverlayAlertPage() {
   const [current, setCurrent] = useState<Donation | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // antrian disimpan di ref supaya tidak ke-reset setiap render
   const queueRef = useRef<Donation[]>([]);
   const isRunning = useRef(false);
 
   // ambil konfigurasi overlay
   useEffect(() => {
+    const streamKey = searchParams.get("streamKey");
+    if (!streamKey) return;
+
     setLoading(true);
     startTransition(async () => {
-      const conf = await getStreamOverlay(
-        String(searchParams.get("streamKey"))
-      );
-
-      console.log({ conf, streamKey: searchParams.get("streamKey") });
-
+      const conf = await getStreamOverlay(String(streamKey));
+      console.log({ conf, streamKey });
       setConfig(conf);
       setLoading(false);
     });
-  }, []);
+  }, [searchParams]);
 
   // listener dari Ably
   useEffect(() => {
     const onMessage = (msg: any) => {
       queueRef.current.push(msg.data);
-      runWorker(); // coba jalankan worker kalau lagi idle
+      runWorker();
     };
 
     ably.connection.on("connected", () => {
@@ -66,9 +75,8 @@ export default function OverlayAlertPage() {
     };
   }, [config]);
 
-  // worker loop
   const runWorker = () => {
-    if (isRunning.current) return; // lagi jalan → jangan start lagi
+    if (isRunning.current) return;
     if (!config?.duration) return;
 
     isRunning.current = true;
@@ -79,55 +87,37 @@ export default function OverlayAlertPage() {
         setCurrent(next);
         setIsVisible(true);
 
-        let sisa = Math.floor(Number(config.duration) / 1000);
-
-        const interval = setInterval(() => {
-          sisa -= 1;
-        }, 1000);
-
         await new Promise((resolve) =>
           setTimeout(resolve, Number(config.duration))
         );
 
-        clearInterval(interval);
-
-        // sembunyikan
         setIsVisible(false);
         await new Promise((resolve) => setTimeout(resolve, 300));
         setCurrent(null);
       }
 
-      isRunning.current = false; // kosong → worker berhenti
+      isRunning.current = false;
     };
 
     process();
   };
 
   useEffect(() => {
-    if (isVisible || current) {
+    if (isVisible && current) {
       const audio = new Audio("/sound/notif-satu.wav");
-
-      if (isVisible) {
-        audio.play().catch((err) => {
-          console.warn("Gagal memutar audio:", err);
-        });
-      }
+      audio.play().catch((err) => {
+        console.warn("Gagal memutar audio:", err);
+      });
     }
   }, [isVisible, current]);
 
-  if (!searchParams.get("streamKey")) {
-    return <></>;
-  }
+  if (!searchParams.get("streamKey")) return <></>;
 
   return (
-    <Suspense fallback={<></>}>
-      <div className="p-3 pr-4">
-        {loading ? (
-          <></>
-        ) : current && isVisible ? (
-          <CompAlert config={config ?? null} donor={current} />
-        ) : null}
-      </div>
-    </Suspense>
+    <div className="p-3 pr-4">
+      {loading ? null : current && isVisible ? (
+        <CompAlert config={config ?? null} donor={current} />
+      ) : null}
+    </div>
   );
 }
