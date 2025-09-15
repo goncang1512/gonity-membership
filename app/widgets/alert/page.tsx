@@ -109,6 +109,10 @@ export default function OverlayAlertPage() {
     }
   }, [isVisible, current]);
 
+  if (!searchParams.get("streamKey")) {
+    return <></>;
+  }
+
   return (
     <div className="p-3 pr-4">
       {loading ? (
